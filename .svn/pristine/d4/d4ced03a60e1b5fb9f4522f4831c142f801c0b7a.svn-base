@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig 
+	PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+     "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+
+<!--  이 xml문서는 ibatis에 대한 환경을 설정하는 문서이다. -->
+
+<sqlMapConfig>
+	
+ 	<properties resource="kr/or/ddit/ibatis/config/dbinfo.properties"/>
+ 
+ 	 <settings useStatementNamespaces = "true"/>
+ 	 
+	
+ 	 
+ 	 <typeAlias alias="memberVO" type="member.vo.MemberVO" />
+ 
+ 	  <transactionManager type="JDBC">
+ 	  	<dataSource type="SIMPLE">
+ 	  		<property name="JDBC.Driver" value="${driver}"/>
+ 	  		<property name="JDBC.ConnectionURL" value="${url}"/>
+ 	  		<property name="JDBC.Username" value="${user}"/>
+ 	  		<property name="JDBC.Password" value="${pass}"/>
+ 	  	</dataSource>
+ 	  </transactionManager>
+
+	 <!--현의-->
+	 <sqlMap resource="kr/or/ddit/ibatis/mapping/member.xml"/> 	
+
+</sqlMapConfig>
+

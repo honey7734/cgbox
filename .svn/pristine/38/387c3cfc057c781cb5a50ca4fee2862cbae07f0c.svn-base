@@ -1,0 +1,54 @@
+package member.controller;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import member.service.IMemberService;
+import member.service.MemberServiceImpl;
+import member.vo.MemberVO;
+
+
+@WebServlet("/memberLogin.do")
+public class MemberLogin extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		
+		//1. 전송데이터 받기
+//		MemberVO vo = new MemberVO();
+		Map<String, String> map = new HashMap<String, String>();
+		
+		
+//		vo.setMember_id(request.getParameter("member_id"));
+//		vo.setMember_pass(request.getParameter("member_pass"));
+		
+		map.put("id", request.getParameter("member_id"));
+		map.put("pass", request.getParameter("member_pass"));
+		
+//		System.out.println("전송할 id : " + vo.getMember_id());
+		System.out.println(map.get("id"));
+		
+		IMemberService service = MemberServiceImpl.getInstance();
+		
+		System.out.println(map.get("id"));
+		
+		//로그인 된 멤버 정보
+		MemberVO loginMember = service.loginMember(map);
+		request.setAttribute("res", loginMember);
+		request.getRequestDispatcher("ticketing/test.jsp").forward(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+}

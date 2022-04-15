@@ -1,0 +1,39 @@
+package nonmember.dao;
+
+import java.sql.SQLException;
+
+import com.ibatis.sqlmap.client.SqlMapClient;
+
+import kr.or.ddit.ibatis.config.SqlMapClientFactory;
+import vo.NonMemberVO;
+
+public class NonMemberDaoImpl implements INonMemberDao {
+
+	private SqlMapClient client;
+	private static INonMemberDao dao;
+	private NonMemberDaoImpl() {
+		client = SqlMapClientFactory.getSqlMapClient();
+	}
+	
+	public static INonMemberDao getInstance() {
+		if(dao == null) dao = new NonMemberDaoImpl();
+		
+		return dao;
+	}
+	
+	@Override
+	public int insertNonMember(NonMemberVO vo) throws SQLException {
+		return  (int) client.insert("nonmember.insertNonMember", vo);
+	}
+
+	@Override
+	public void insertCustomer(int num) throws SQLException {
+		client.insert("nonmember.insertCustomer", num);
+	}
+
+	@Override
+	public int selectMaxCustomer() throws SQLException {
+		return (int) client.queryForObject("nonmember.selectMaxCustomer");
+	}
+
+}
