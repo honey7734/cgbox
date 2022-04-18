@@ -16,6 +16,7 @@
  	 
  	 <typeAlias alias="memberVO" type="vo.MemberVO" />
  	 <typeAlias alias="nonMemberVO" type="vo.NonMemberVO" />
+ 	 <typeAlias alias="mtheaterVO" type="vo.MTheaterVO" />
  
  	  <transactionManager type="JDBC">
  	  	<dataSource type="SIMPLE">
@@ -29,6 +30,7 @@
 	 <!--현의-->
 	 <sqlMap resource="kr/or/ddit/ibatis/mapping/member.xml"/> 	
 	 <sqlMap resource="kr/or/ddit/ibatis/mapping/nonmember.xml"/> 	
+	 <sqlMap resource="kr/or/ddit/ibatis/mapping/mtheater.xml"/> 	
 
 </sqlMapConfig>
 

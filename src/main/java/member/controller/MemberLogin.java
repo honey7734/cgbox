@@ -38,6 +38,7 @@ public class MemberLogin extends HttpServlet {
 		MemberVO loginMember = service.loginMember(map);
 		request.setAttribute("login", loginMember);
 		request.getRequestDispatcher("ticketing/test.jsp").forward(request, response);
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

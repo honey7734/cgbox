@@ -106,6 +106,11 @@ $(function(){
 	/* background:lightgray;  */
 }
 
+nav{
+	background: rgb(220,53,69);
+	background: linear-gradient(90deg, rgba(220,53,69,1) 0%, rgba(220,53,69,1) 29%, rgba(255,66,0,1) 100%);
+}
+
 </style>
 
 </head>
@@ -208,7 +213,7 @@ $(function(){
 	  <hr>
 	  <div id="join">
 	  	<p>
-	  	  계정이 없으신가요?&nbsp;&nbsp;&nbsp;<a href="#">회원가입하기</a>
+	  	  계정이 없으신가요?&nbsp;&nbsp;&nbsp;<a href="../member/join.jsp">회원가입하기</a>
 	  	</p>
 	  </div>
 

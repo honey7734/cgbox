@@ -8,6 +8,10 @@
 	%>
 	{
 		"flag" : "<%=login.getMember_name() %>님 로그인 성공"
+		<%
+			//성공시 세션으로 저장
+			session.setAttribute("member", login);
+		%>
 	}
 	<%
 	}else{
