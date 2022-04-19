@@ -8,4 +8,5 @@ public interface IMTheaterService {
 	
 	public List<MTheaterVO> selectAll();
 	
+	public MTheaterVO selectAllByName(String name);
 }

@@ -9,4 +9,6 @@ public interface IMTheaterDao {
 	
 	public List<MTheaterVO> selectAll() throws SQLException;
 	
+	public MTheaterVO selectAllByName(String name) throws SQLException;
+	
 }

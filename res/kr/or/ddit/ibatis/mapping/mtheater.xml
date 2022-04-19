@@ -6,4 +6,8 @@
 	<select id="selectAll" resultClass="mtheaterVO">
 		select * from mtheater
 	</select>
+	
+	<select id="selectAllByName" parameterClass="string" resultClass="mtheaterVO">
+		select * from mtheater where mtheater_name = #name#
+	</select>
 </sqlMap>

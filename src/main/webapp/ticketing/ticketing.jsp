@@ -1,3 +1,5 @@
+<%@page import="vo.NonMemberVO"%>
+<%@page import="vo.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -10,6 +12,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/jquery.serializejson.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap" rel="stylesheet">
+  
+  
 <title>좌석 예약</title>
 <style type="text/css">
 nav{
@@ -17,8 +21,13 @@ nav{
 	background: linear-gradient(90deg, rgba(220,53,69,1) 0%, rgba(220,53,69,1) 29%, rgba(255,66,0,1) 100%);
 }
 
+.mt-3, .my-3 {
+    /* margin-top: 1rem!important; */
+    margin-top: 0px!important; 
+}
+
 #cont div{
-	margin-top: 200px;
+	margin-top: 140px;
   	background-color: #333333;
 	text-align: center;
 	color: white;
@@ -83,9 +92,98 @@ nav{
 #nbtn{
 	width: 74px;
 }
+
+.row {
+	margin-left: 0px;
+	margin-right: 0px; 
+}
+
+
+.modal-body label{
+	display: inline-block;
+	width: 100px;
+	text-align: right;
+	border-right: 2px solid #dc3545;
+	padding-right: 10px;
+	margin-right: 10px;
+	font-weight: bold;
+}
+
+
+/* 중복 css */
+#movieImg{
+	display: inline-block;
+	width: 100px;
+	height: 135px;
+}
+
+#movieResult{
+	background: #1d1d1c;
+	border: 0px;
+}
+
+#movieInfo,
+#theaterInfo,
+#seatInfo
+{
+	color: white;
+	border-right: 1px solid gray;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+
+#movieInfo>span,
+#theaterInfo>span
+{
+	display: inline-block;
+	margin: 3px;
+	padding-top: 5px;
+	margin-bottom: 0px;
+}
+
+#movieImgDiv{
+	text-align: right;
+	margin-top: 20px;
+	padding-bottom: 15px;
+}
+
+.infoText+span{
+	font-weight: bold;
+}
+
+.nextdivs{
+	/* font-size: 2.0em; */
+	margin: 10px;
+	margin-top: 20px;
+	display: inline-block;
+}
+
+.nextdivs img{
+	padding-bottom: 5px;
+}
+
+#nextDiv{
+	color: gray;
+}
+
+
+#nextbtn{
+	margin-left: 60px;
+	width: 120px;
+	height: 120px;
+}
+
+#movieInfoDiv,
+#thInfoDiv{
+	display: inline;
+}
+
+
 </style>
 <script type="text/javascript">
 $(function() {
+	
 	//1표당 기준가격
 	var vprice = 8000;
 	$('#price span').text(vprice);
@@ -111,13 +209,19 @@ $(function() {
 		
 		//가격 변경
 		$('#price span').text(cnt * vprice);
+		btnprod();
 	}
 	
 	$('#cntDown').on('click', function() {
 		var cnt = parseInt($('span[class="page-link"]').text());
+		if(cnt - 1 < $('.select').length){
+			alert('선택한 인원이 예매인원보다 많습니다!');
+			return false;
+		}
 		
 		$('span[class="page-link"]').text(cnt - 1);
 		
+		$('#cnt').text(cnt-1 + '명');
 		chkcnt();
 	})
 	
@@ -125,18 +229,15 @@ $(function() {
 		var cnt = parseInt($('span[class="page-link"]').text());
 		
 		$('span[class="page-link"]').text(cnt + 1);
-		
+		$('#cnt').text(cnt+1 + '명');
 		chkcnt();
 	})
-	
-	
-	
-	
 	
 	$('.seat').on('click', function() {
 		if($(this).hasClass('select')){
 			$('#minfo').text('이미 선택한 좌석입니다!');
 			$("#overModal").modal();
+			return false;
 		}
 
 		$(this).addClass('select');
@@ -147,16 +248,109 @@ $(function() {
 			$("#overModal").modal();
 		}
 		
+		if($(this).hasClass('select')){
+			var data = $('#seatnum').text().trim();
+			var result = $(this).parent().find('.seatKind').text() + $(this).text();			
+			
+			if(data.length > 0){
+				result = data + ',' + result;
+			}
+			
+			//선택한 좌석이 라면 정보칸에 좌석 정보 추가	
+			$('#seatnum').text(result);
+		}
+		// 선택한 인원수 만큼 선택완료시 버튼 활성화
+		btnprod();
 	})
+	
+	
+	
+	function btnprod() {
+		
+		if($('.select').length ==  parseInt($('span[class="page-link"]').text())){
+			$('#nextbtn').removeAttr('disabled')
+		}else{
+			$('#nextbtn').attr('disabled', 'disabled')
+		}
+	}
+	
 	
 	
 	//다시 선택 -> 예 클릭시
 	$('#ybtn').on('click', function() {
 		$('.seat').removeClass('select');
+		//좌석 정보 초기화
+		$('#seatnum').empty();
+	})
+	
+	
+	
+	//중복
+	$('#nextbtn').hover(function() {
+		$(this).find('img').attr('src', 'https://img.icons8.com/fluency-systems-regular/50/ffffff/circled-right.png');
+	}, function() {
+		$(this).find('img').attr('src', 'https://img.icons8.com/fluency-systems-regular/50/dc3545/circled-right.png');
+	})
+	
+	
+	//다음 버튼 클릭시 모달창이 열린다
+	$('#nextbtn').on('click', function() {
+		//예약 내역 확인 창에 필요한 정보 입력
 		
+		
+		// 인원수
+		$('#resultcnt').text($('#cnt').text().split('명',2)[0]);
+		
+		//좌석
+		var seatarr = $('#seatnum').text().split(',');
+		var sresult = "";
+		
+		$.each(seatarr, function(i, v) {
+			if(i == 0){
+				sresult += v;
+			}else{
+				sresult += " / " + v ;
+			}
+		})
+		
+		$('#resultseat').text(sresult); 
+		
+		
+		//영화관 위치는 db에서 가져옴 -> #resultaddr
+		var mname = $("#resmname").text();
+			
+		$.ajax({
+			type : 'get',
+			url : '<%=request.getContextPath() %>/MtheaterAddress.do',
+			data : {
+				"name" : mname
+			},
+			success : function(res) {
+				console.log("영화관 정보"); 
+				console.log(res); 
+				$('#resultaddr').text(res.mtheater_addr);
+				
+			},
+			error : function(xhr) {
+				alert("상태 : " + xhr.status);
+			},
+			dataType : 'json'
+		})
+		
+	})
+	
+	$('#finalbtn').on('click', function() {
+		//1. DB에 예약정보 inset
+		
+		// - insert하기 위한 정보 저장
+		
+		
+		
+		//2. 결제 페이지로 이동
 	})
 })
 </script>
+
 </head>
 <body>
 	
@@ -330,11 +524,74 @@ $(function() {
 			</div>
 		</div>
 	</div>
-	
 </div>
 
-<!-- The Modal -->
-<div class="modal" id="overModal">
+<div>
+	<div class="row" id="movieResult" style="background: #1d1d1c;border: 0px;">
+		
+		
+		<div id="movieImgDiv" class="col-sm-3">
+  			<img id="movieImg" src="../image/영화포스터샘플.png">
+		</div>
+		
+		
+		<div id="movieInfo" class="col-sm-1">
+			<div id="movieInfoDiv">
+			  <span id="movieName"><%=session.getAttribute("moiveName") %></span><br>
+			  <span id="movieKind">2D</span><br>
+			  <span id="movieAge">15세 관람가</span>
+			</div>
+		</div>
+			  
+		<!-- 극장선택 -->
+		<div id="theaterInfo" class="col-sm-2">
+			<div id="thInfoDiv">
+				<span class="infoText">극장</span>
+			    <span id="thName"><%=session.getAttribute("mtheaterName") %></span>
+			    <br>
+			    <span class="infoText">일시</span>
+			    <span id="resdayInfo">
+			    	2022.<%=session.getAttribute("resmonth") %>.<%=session.getAttribute("resday") %>(<%=session.getAttribute("resweek") %>)</span>
+			    <span id="resTimeInfo">
+			    	<%=session.getAttribute("screenTime") %>
+			    </span>
+			    <br>
+			    <span class="infoText">상영관</span>
+			    <span id="thnoInfo">
+			    	<%=session.getAttribute("theaterNo") %>관
+			    </span>
+			    <br>
+			    <span class="infoText">인원</span>
+			    <span id="cnt"> 1명 </span>
+			  </div>
+		</div>
+			  
+		<div id="seatInfo" class="col-sm-2">
+				<span class="infoText">좌석명</span>
+				<span>일반석</span>
+				<br>
+				<span class="infoText">좌석번호</span>
+				<span id="seatnum"> <!-- A0 --></span>
+
+		 </div>
+		 <div class="col-sm-3">
+			 <span class="nextdivs">
+			  	<button id="nextbtn" type="button" class="btn btn-outline-danger btn-lg" disabled data-toggle="modal" data-target="#resModal">
+			  		<img src="https://img.icons8.com/fluency-systems-regular/50/dc3545/circled-right.png"/>
+			  		<br>
+				  	예약
+			  	</button>
+			 </span>
+		 </div>
+	</div>
+</div>
+
+
+
+
+
+<!-- 정보 모달 (confirm) -->
+<div class="modal fade" id="overModal">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
 
@@ -354,6 +611,66 @@ $(function() {
   </div>
 </div>
 
+
+<!-- 예약안내 모달 -->
+  <div class="modal fade" id="resModal">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">예약정보 확인</h4>
+        </div>
+        
+        <div class="modal-body">
+			<!-- 예약자 명은 회원이면 회원명 비회원이면 비회원생년월일 -->
+			<label>예약자 명 </label>
+			<span>
+			<%if(session.getAttribute("loginmember")!= null){
+				MemberVO vo = (MemberVO)session.getAttribute("loginmember");
+				out.println(vo.getMember_name());
+			}else if(session.getAttribute("nonMember") != null){
+				NonMemberVO vo = (NonMemberVO)session.getAttribute("nonMember");
+				out.print(vo.getNonmember_birth());
+			}else{
+				out.print("세션오류 : 예약자 정보를 불러올 수 없습니다");
+			}
+			%>
+			</span>
+			<br>
+			<label>영화 제목</label>
+			<span><%=session.getAttribute("moiveName") %></span>
+			<br>
+			<label>영화관</label>
+			CGBOX <span id="resmname"><%=session.getAttribute("mtheaterName") %></span>점
+			<br>
+			<label>상영관</label>
+			<span><%=session.getAttribute("theaterNo") %></span>관
+			<br>
+			<label>상영일자</label>
+			<span>
+			2022.
+			<%=session.getAttribute("resmonth") %>.
+			<%=session.getAttribute("resday") %>
+			(<%=session.getAttribute("resweek") %>)
+			</span>
+			<br>
+			<label>인원수</label>
+			<span id="resultcnt">-</span>명		
+			<br>
+			<label>좌석</label>
+			<span id="resultseat"></span>
+			<br>
+			<label>영화관 위치</label>
+			<span id="resultaddr"></span>
+        </div>
+        
+        <div class="modal-footer">
+          <button id="finalbtn" type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

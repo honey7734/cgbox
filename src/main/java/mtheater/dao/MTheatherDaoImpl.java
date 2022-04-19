@@ -27,4 +27,9 @@ public class MTheatherDaoImpl implements IMTheaterDao {
 		return client.queryForList("mtheater.selectAll");
 	}
 
+	@Override
+	public MTheaterVO selectAllByName(String name) throws SQLException {
+		return (MTheaterVO) client.queryForObject("mtheater.selectAllByName",name);
+	}
+
 }

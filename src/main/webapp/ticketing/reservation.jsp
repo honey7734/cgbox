@@ -159,8 +159,8 @@ nav{
 	margin-top: 10px;
 }
 
+/* 중복 css */
 #movieImg{
-	/* margin : 20px 0px; */
 	display: inline-block;
 	width: 100px;
 	height: 135px;
@@ -168,6 +168,7 @@ nav{
 
 #movieResult{
 	background: #1d1d1c;
+	border: 0px;
 }
 
 #movieInfo,
@@ -188,10 +189,6 @@ nav{
 	margin: 3px;
 	padding-top: 5px;
 	margin-bottom: 0px;
-}
-
-#movieResult{
-	border: 0px;
 }
 
 #movieImgDiv{
@@ -224,6 +221,11 @@ nav{
 	margin-left: 60px;
 	width: 120px;
 	height: 120px;
+}
+
+#movieInfoDiv,
+#thInfoDiv{
+	display: inline;
 }
 
 
@@ -260,10 +262,7 @@ nav{
 	margin-bottom: 3px;
 }
 
-#movieInfoDiv,
-#thInfoDiv{
-	display: inline;
-}
+
 
 
 </style>
@@ -271,32 +270,22 @@ nav{
 <script type="text/javascript">
 $(function() {
 
-	//영화 이름 출력용 ajax (일별 박스오피스 10개)
+	//영화 리스크 출력용 ajax(DB에서 가져옴)
 	$.ajax({
 		type: "GET",
-		url: "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json",
-		data: {
-			"key" : "453d2dbb0b3bdd2c573d4eb32807c1fa",
-			"targetDt" : "20220301"
-		},
-		success: function(response){
-			/*
-			console.log(response); 
-			console.log(response.boxOfficeResult.dailyBoxOfficeList); 
-			*/
-			//영화 이름 movieNm / 개봉일 openDt
+		url: "<%=request.getContextPath()%>/MovieList.do",
+		success: function(res){
+			//영화 이름 movie_name / 영화번호 movie_no		
+			 var result = "";
 			
-			var array = response.boxOfficeResult.dailyBoxOfficeList;
-			var result = "";
-			$.each(array, function(i,v) {
-				/* console.log(i + "번째 ==> " + v.movieNm +"(개봉일 : " + v.openDt +")"); */
-				result += "<a id='movie" + i +"' href='#' class='list-group-item list-group-item-action movie'>" + v.movieNm +"</a>"
+			$.each(res, function(i,v) {
+			 	result += "<a id='" + v.movie_no +"' href='#' class='list-group-item list-group-item-action movie'>" + v.movie_name +"</a>"
 			}) 
 			
-			$('#movieList').html(result);
-		}
-	})
-
+			$('#movieList').html(result); 
+		},
+		dataType : 'json'
+	}) 
 	
 	//영화관 정보 출력용 ajax (DB에서 가져옴)
 	$.ajax({
@@ -321,13 +310,14 @@ $(function() {
 	
 	
 	//모든 요소 클릭시 nextbtn 활성화
+	movieNo ="";
 	moiveName = "";	//영화이름
 	mtheaterName = "";	//상영관 이름
 	resmonth = "";	// 예약일 달
 	resday = "";	// 예약일 날
+	resweek = "";	//요일
 	theaterNo = "";	// 예약 상영관 번호 
 	screenTime = ""; // 상영시간
-	resweek = "";
 	//모든 값이 입력되었는지 체크하는 함수
 	function checkNext() {
 		if(moiveName.length > 0 && mtheaterName.length > 0 && resmonth.length > 0 && resday.length > 0 && theaterNo.length > 0 && screenTime.length > 0 && resweek.length > 0){
@@ -336,9 +326,76 @@ $(function() {
 		}
 	}
 	
+	
+	//a 리스트를 클릭해서 active가 생성될 때 마다 체크
+	function printTimeList() {
+		
+		//영화이름, 상영관 이름, 날짜정보가 모두 선택된 경우 시간 리스트를 출력
+		if(moiveName.length > 0 && mtheaterName.length > 0 && resmonth.length > 0 && resday.length > 0 && resweek.length > 0 ){
+			/* alert('시간리스트 출력준비완료!');	 */
+			$.ajax({
+				type:"get",
+				data : {
+					"movie_no" : movieNo,
+					"mtheaterName" : mtheaterName
+				},
+				url : "<%=request.getContextPath()%>/screenList.do",
+				success: function(res) {
+					console.log(res)
+					var result = "";
+					
+					$.each(res, function(i,v) {
+						/* 
+						li 1개당  넘어온 데이터의 theater_no(영화관번호)가 같은 데이터의 정보를 담는다 -> 같은 것만 오는디?
+						theater_kind(영화관 종류)는 넘어온 데이터의 theater_no를 이용하여 theater 테이블의 theater_kind데이터를 가져와야하고
+						theater_num(영화관 이름)은 theater_no를 이용하여 theater 테이블의 theater_name 데이터를 가져와야한다
+						theater_seatsms 54석으로 고정
+						즉,  theater_no를 이용하여 theater 테이블에서 select한 theaterVO(theater_kind, theater_name)정보가 필요하다
+						
+						
+						movieTime안에 screen_time은 넘어온 데이터의 screen_start값을 넣어주고
+						(추가필요 : 필요한 경우 pop등을 이용하여 screen_end 값도 표시해준다)
+						
+						예약테이블에 상영일자 번호(screen_no)을 이용하여 총 칼럼 수 를 count하고 54(총 좌석 수)에서 해당 값을 뺀 남은 좌석 수를 select를 통해 가져온다
+						*/
+						
+						
+						/* result += '<li class="list-group-item">'
+						result += '	<span class="theater_kind">2D</span>'  		
+						result += '	<span class="theater_num" num="1">1관</span>'	
+						result += '	<span class="theater_seat">(총 54석)</span>'
+						result += '	<br>'
+							
+						result += '	<span class="movieTime">'
+						result += '	  <span class="screen_time">09:30</span>'
+						result += '	  <span class="seat">125석</span>'	
+						result += '	</span>'
+							
+						result += '	<span class="movieTime">'
+						result += '	  <span class="screen_time">21:00</span>'
+						result += '	  <span class="seat">121석</span>'
+						result += '	</span>'
+						result += '</li>' */
+		  			
+					})
+					
+					$('#movieTimeList ul').html(result);
+					
+				},
+				dataType : 'json'
+			})
+			
+		}
+	}
+	
+	
+	
+	
+	
+	
 	//다음 버튼 클릭시 전송데이터 전송하기
 	$('#nextbtn').on('click', function() {
-		alert('전송');
+		/* alert('전송'); */
 		$.ajax({
 			type:"get",
 			data : {
@@ -357,8 +414,6 @@ $(function() {
 			
 		})
 	})
-	
-	//------------- css 관련 ----------------
 	
 	
 	//영화 선택시
@@ -385,10 +440,12 @@ $(function() {
 		var nm =  $(this).text();
 		$('#movieName').text(nm);
 		moiveName = nm;
+		movieNo = $(this).attr('id');
 		
 		//시청 연령, 영화관 종류(ex. 2D, 3D...)삽입
 		
 		checkNext();
+		printTimeList();
 	})
 
 	/*
@@ -417,6 +474,7 @@ $(function() {
 		$('#thName').attr('no', thno); 
 		
 		checkNext();
+		printTimeList();
 		
 	})
 
@@ -450,9 +508,12 @@ $(function() {
 		$('#resdayInfo').text('2022.' + resmonth +'.' + resday + '(' + resweek +')');
 		
 		checkNext();
+		printTimeList();
 		
 	})
 	
+	
+	//상영시간선택
 	$('.screen_time').on('click', function() {
 		$('.screen_time').removeClass('active');
 		$(this).addClass('active')
@@ -647,7 +708,8 @@ $(function() {
 	  <div id="movieTimeList" class="col-sm-4">
 	  	<!-- 영화 시간대별 리스트 -->
 	  	<ul class="list-group list-group-flush">
-			<li href="#" class="list-group-item">
+			<!--
+			<li class="list-group-item">
 				<span class="theater_kind">2D</span>	  		
 				<span class="theater_num" num="1">1관</span>	
 				<span class="theater_seat">(총 139석)</span>	
@@ -737,7 +799,7 @@ $(function() {
 				  <span class="screen_time">21:00</span>
 				  <span class="seat">121석</span>
 				</span>	
-	  		</li>
+	  	</li> -->
 	  	</ul>
 	  </div>
 
@@ -745,6 +807,7 @@ $(function() {
 	
 	<br><br>
 </div>
+
 	<div id="movieResult">
 		<div class="col">
 			<!-- 예매 정보 출력용 div -->
@@ -793,7 +856,7 @@ $(function() {
 			  	
 			  	<span class="nextdivs">
 			  		<img src="https://img.icons8.com/small/50/666666/circled-chevron-right.png"/>
-			  		결제
+			  		예약
 			  	</span>
 			  	
 			  	<span class="nextdivs">
