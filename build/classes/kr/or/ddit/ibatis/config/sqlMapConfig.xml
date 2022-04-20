@@ -20,6 +20,9 @@
  	 <typeAlias alias="movieVO" type="vo.MovieVO" />
  	 <typeAlias alias="screenVO" type="vo.ScreenVO" />
  	 <typeAlias alias="theaterVO" type="vo.TheaterVO" />
+ 	 <typeAlias alias="seatVO" type="vo.SeatVO" />
+ 	 <typeAlias alias="ticketVO" type="vo.TicketVO" />
+ 	 <typeAlias alias="reserveVO" type="vo.ReserveVO" />
  
  	  <transactionManager type="JDBC">
  	  	<dataSource type="SIMPLE">
@@ -37,6 +40,9 @@
 	 <sqlMap resource="kr/or/ddit/ibatis/mapping/movie.xml"/> 	
 	 <sqlMap resource="kr/or/ddit/ibatis/mapping/screen.xml"/> 	
 	 <sqlMap resource="kr/or/ddit/ibatis/mapping/theater.xml"/> 	
+	 <sqlMap resource="kr/or/ddit/ibatis/mapping/seat.xml"/> 	
+	 <sqlMap resource="kr/or/ddit/ibatis/mapping/ticket.xml"/> 	
+	 <sqlMap resource="kr/or/ddit/ibatis/mapping/reserve.xml"/> 	
 
 </sqlMapConfig>
 

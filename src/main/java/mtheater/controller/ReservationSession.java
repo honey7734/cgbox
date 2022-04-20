@@ -24,6 +24,8 @@ public class ReservationSession extends HttpServlet {
 		session.setAttribute("theaterNo", request.getParameter("theaterNo"));
 		session.setAttribute("screenTime", request.getParameter("screenTime"));
 		session.setAttribute("resweek", request.getParameter("resweek"));
+		session.setAttribute("screenNo", request.getParameter("screenNo"));
+		session.setAttribute("screen_end", request.getParameter("screen_end"));
 
 	}
 

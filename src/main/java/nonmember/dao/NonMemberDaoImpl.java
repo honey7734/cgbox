@@ -22,8 +22,8 @@ public class NonMemberDaoImpl implements INonMemberDao {
 	}
 	
 	@Override
-	public int insertNonMember(NonMemberVO vo) throws SQLException {
-		return  (int) client.insert("nonmember.insertNonMember", vo);
+	public void insertNonMember(NonMemberVO vo) throws SQLException {
+		client.insert("nonmember.insertNonMember", vo);
 	}
 
 	@Override

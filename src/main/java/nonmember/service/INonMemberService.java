@@ -5,7 +5,7 @@ import vo.NonMemberVO;
 
 public interface INonMemberService {
 	
-	public int insertNonMember(NonMemberVO vo);
+	public void insertNonMember(NonMemberVO vo);
 	
 	public void insertCustomer(int num);
 	

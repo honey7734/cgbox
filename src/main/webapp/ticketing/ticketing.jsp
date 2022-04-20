@@ -184,6 +184,18 @@ nav{
 <script type="text/javascript">
 $(function() {
 	
+	<%
+	//세션이 없을 경우 진행할 수 없으니 알림을 출력하고 로그인페이지로 이동한다
+	if(session.getAttribute("loginmember") == null && session.getAttribute("nonMember") == null){
+		//로그인 페이지로 이동
+	%>
+		alert('잘못된 경로 접근입니다.');
+		location.href ='NonMember_reservations.jsp';
+	<%
+	}
+	%>
+	
+	
 	//1표당 기준가격
 	var vprice = 8000;
 	$('#price span').text(vprice);
@@ -341,8 +353,37 @@ $(function() {
 	
 	$('#finalbtn').on('click', function() {
 		//1. DB에 예약정보 inset
-		
-		// - insert하기 위한 정보 저장
+		//좌석 데이터
+		var seatarr = $('#seatnum').text().split(',');
+		console.log(seatarr);
+	
+		//1) 티켓 데이터 insert -> 필요한 데이터? = 세션에 있는 고객번호
+		//2) 예약 데이터 insert -> 좌석데이터 / 상영일자 번호 / 티켓번호  
+		$.ajax({
+			type : 'get',
+			url : '<%=request.getContextPath() %>/InsertReservation.do',
+			traditional : true,
+			data : {
+				"seats" : seatarr,
+				"screenNo" : '<%=session.getAttribute("screenNo")%>',
+				"customerNo" : '<%
+					if(session.getAttribute("loginmember") != null){
+						MemberVO vo = (MemberVO) session.getAttribute("loginmember");
+						out.print(vo.getCustomer_no());
+					}
+				%>'
+			},
+			success : function(res) {
+				alert(res);
+				//결제페이지로 이동
+				location.href = "NonMember_reservations.jsp";
+			},
+			error : function(xhr) {
+				alert("상태 : " + xhr.status);
+				//location.href = "NonMember_reservations.jsp";
+			},
+			dataType : 'json'
+		})
 		
 		
 		
@@ -426,7 +467,7 @@ $(function() {
 		</div>
 		<div id="timeInfo"class="col">
   			2020.<%=session.getAttribute("resmonth") %>.<%=session.getAttribute("resday") %>(<%=session.getAttribute("resweek") %>)
-  			<%=session.getAttribute("screenTime") %> ~ <%=session.getAttribute("screenTime") %>
+  			<%=session.getAttribute("screenTime") %> ~ <%=session.getAttribute("screen_end") %>
 		</div>	  	
 		<div id="price" class="col d-flex justify-content-end">
 			<span>0</span>원
@@ -629,7 +670,7 @@ $(function() {
 				out.println(vo.getMember_name());
 			}else if(session.getAttribute("nonMember") != null){
 				NonMemberVO vo = (NonMemberVO)session.getAttribute("nonMember");
-				out.print(vo.getNonmember_birth());
+				out.print(vo.getNonmember_birth() + "(비회원)");
 			}else{
 				out.print("세션오류 : 예약자 정보를 불러올 수 없습니다");
 			}

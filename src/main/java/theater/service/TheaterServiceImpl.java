@@ -33,4 +33,28 @@ public class TheaterServiceImpl implements ITheaterService{
 		return list;
 	}
 
+	@Override
+	public TheaterVO selectAllByTheaterNo(int tno) {
+		TheaterVO result = null;
+		
+		try {
+			result = dao.selectAllByTheaterNo(tno);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int selectTheaterNoByScreenNo(int sno) {
+		int result = 0;
+		try {
+			result = dao.selectTheaterNoByScreenNo(sno);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }

@@ -270,6 +270,19 @@ nav{
 <script type="text/javascript">
 $(function() {
 
+	<%
+	//세션이 없을 경우 진행할 수 없으니 알림을 출력하고 로그인페이지로 이동한다
+	if(session.getAttribute("loginmember") == null && session.getAttribute("nonMember") == null){
+		//로그인 페이지로 이동
+	%>
+		alert('로그인이 필요합니다 !');
+		location.href ='NonMember_reservations.jsp';
+	<%
+	}
+	%>
+	
+	
+	
 	//영화 리스크 출력용 ajax(DB에서 가져옴)
 	$.ajax({
 		type: "GET",
@@ -341,43 +354,39 @@ $(function() {
 				},
 				url : "<%=request.getContextPath()%>/screenList.do",
 				success: function(res) {
-					console.log(res)
-					var result = "";
 					
+					//가져와야되는 정보
+					//1. 상영관 번호와  ->THEATER_NO
+					//2. 상영관 이름(키값) ->THEATER_NAME
+					//3. 상영관 종류(키값) -> THEATER_KIND
+					//4. 상영시작시간 / 종료시간 (O)-> screen_start / screen_end
+					
+					var result = "";
+
+					//반복문 i가 키 값
 					$.each(res, function(i,v) {
-						/* 
-						li 1개당  넘어온 데이터의 theater_no(영화관번호)가 같은 데이터의 정보를 담는다 -> 같은 것만 오는디?
-						theater_kind(영화관 종류)는 넘어온 데이터의 theater_no를 이용하여 theater 테이블의 theater_kind데이터를 가져와야하고
-						theater_num(영화관 이름)은 theater_no를 이용하여 theater 테이블의 theater_name 데이터를 가져와야한다
-						theater_seatsms 54석으로 고정
-						즉,  theater_no를 이용하여 theater 테이블에서 select한 theaterVO(theater_kind, theater_name)정보가 필요하다
+						var array = eval("(" + i + ")");
+						var theater_name = array[0];
+						var theater_kind = array[1];
+
+						
+						result += '<li class="list-group-item">';
+						 
+						result += '	<span class="theater_kind">'+ theater_kind +'</span>';
+						result += '	<span class="theater_num" num="'+ theater_name +'">'+ theater_name +'관</span><br>'; 
+						
+						$.each(v, function(idx, s) {
+							result += '	<span class="movieTime" no='+ s.screen_no +'>';
+							result += '	  <span class="screen_time" end="'+s.screen_end +'">' + s.screen_start +'</span>';
+							result += '	  <span class="seat">50석</span>'	
+							result += '	</span>';
+						})
 						
 						
-						movieTime안에 screen_time은 넘어온 데이터의 screen_start값을 넣어주고
-						(추가필요 : 필요한 경우 pop등을 이용하여 screen_end 값도 표시해준다)
-						
-						예약테이블에 상영일자 번호(screen_no)을 이용하여 총 칼럼 수 를 count하고 54(총 좌석 수)에서 해당 값을 뺀 남은 좌석 수를 select를 통해 가져온다
-						*/
-						
-						
-						/* result += '<li class="list-group-item">'
-						result += '	<span class="theater_kind">2D</span>'  		
-						result += '	<span class="theater_num" num="1">1관</span>'	
-						result += '	<span class="theater_seat">(총 54석)</span>'
-						result += '	<br>'
-							
-						result += '	<span class="movieTime">'
-						result += '	  <span class="screen_time">09:30</span>'
-						result += '	  <span class="seat">125석</span>'	
-						result += '	</span>'
-							
-						result += '	<span class="movieTime">'
-						result += '	  <span class="screen_time">21:00</span>'
-						result += '	  <span class="seat">121석</span>'
-						result += '	</span>'
-						result += '</li>' */
-		  			
+						result += '</li>'; 
 					})
+
+		  		
 					
 					$('#movieTimeList ul').html(result);
 					
@@ -395,7 +404,9 @@ $(function() {
 	
 	//다음 버튼 클릭시 전송데이터 전송하기
 	$('#nextbtn').on('click', function() {
-		/* alert('전송'); */
+		var no = $('#movieTimeList ul span.active').parent().attr('no');
+		var end = $('#movieTimeList ul span.active').attr('end');
+		
 		$.ajax({
 			type:"get",
 			data : {
@@ -405,7 +416,9 @@ $(function() {
 				"resday"       : resday,
 				"theaterNo"    : theaterNo,
 				"screenTime"   : screenTime,
-				"resweek" : resweek
+				"screenNo"	   : no,
+				"resweek" : resweek,
+				"screen_end" : end
 			},
 			url : "<%=request.getContextPath()%>/ReservationSession.do",
 			success: function() {
@@ -448,13 +461,6 @@ $(function() {
 		printTimeList();
 	})
 
-	/*
-	--> 극장이 대전밖에 없어서 사용하지 않음
-	$('#theather a').on('click', function() {
-		$('#theather a').removeClass('active');
-		$(this).addClass('active')
-	})
- 	*/
  	
  	//영화관 선택시
  	$('#thInfoDiv').hide();
@@ -478,7 +484,6 @@ $(function() {
 		
 	})
 
-	//일시나 상영관 선택은 데이터베이스 입력 후 추가 필요 !
 	
 	$('.dayList a').on('click', function() {
 		$('#thInfoDiv').show();
@@ -514,7 +519,7 @@ $(function() {
 	
 	
 	//상영시간선택
-	$('.screen_time').on('click', function() {
+	$(document).on('click', '.screen_time', function() {
 		$('.screen_time').removeClass('active');
 		$(this).addClass('active')
 		
@@ -708,98 +713,6 @@ $(function() {
 	  <div id="movieTimeList" class="col-sm-4">
 	  	<!-- 영화 시간대별 리스트 -->
 	  	<ul class="list-group list-group-flush">
-			<!--
-			<li class="list-group-item">
-				<span class="theater_kind">2D</span>	  		
-				<span class="theater_num" num="1">1관</span>	
-				<span class="theater_seat">(총 139석)</span>	
-				<br>
-				
-				<span class="movieTime">
-				  <span class="screen_time">09:30</span>
-				  <span class="seat">125석</span>	
-				</span>
-				
-				<span class="movieTime">
-				  <span class="screen_time">21:00</span>
-				  <span class="seat">121석</span>
-				</span>	
-	  		</li>
-			<li class="list-group-item">
-				<span class="theater_kind">2D</span>	  		
-				<span class="theater_num" num="2">2관</span>	
-				<span class="theater_seat">(총 139석)</span>	
-				<br>
-				<span class="movieTime">
-				  <span class="screen_time">09:30</span>
-				  <span class="seat">125석</span>	
-				</span>
-				
-				<span class="movieTime">
-  				  <span class="screen_time">21:00</span>
-				  <span class="seat">121석</span>	
-				</span>
-				
-				<span class="movieTime">
-				  <span class="screen_time">21:00</span>  
-				  <span class="seat">121석</span>	
-				</span>
-				
-				<span class="movieTime">
-				  <span class="screen_time">21:00</span>
-				  <span class="seat">121석</span>
-				</span>	
-	  		</li>
-			<li class="list-group-item">
-				<span class="theater_kind">2D</span>	  		
-				<span class="theater_num" num="3">3관</span>	
-				<span class="theater_seat">(총 139석)</span>	
-				<br>
-				
-				<span class="movieTime">
-				  <span class="screen_time">21:00</span>  
-				  <span class="seat">121석</span>	
-				</span>
-				
-				<span class="movieTime">
-				  <span class="screen_time">21:00</span>
-				  <span class="seat">121석</span>
-				</span>		
-	  		</li>
-			<li class="list-group-item">
-				<span class="theater_kind">2D</span>	  		
-				<span class="theater_num" num="4">4관[시네마포]</span>	
-				<span class="theater_seat">(총 139석)</span>	
-				
-				<br>
-				
-				<span class="movieTime">
-				  <span class="screen_time">21:00</span>  
-				  <span class="seat">121석</span>	
-				</span>
-				
-				<span class="movieTime">
-				  <span class="screen_time">21:00</span>
-				  <span class="seat">121석</span>
-				</span>	
-	  		</li>
-			<li class="list-group-item">
-				<span class="theater_kind">2D</span>	  		
-				<span class="theater_num" num="5">5관</span>	
-				<span class="theater_seat">(총 139석)</span>	
-				
-				<br>
-				
-				<span class="movieTime">
-				  <span class="screen_time">21:00</span>  
-				  <span class="seat">121석</span>	
-				</span>
-				
-				<span class="movieTime">
-				  <span class="screen_time">21:00</span>
-				  <span class="seat">121석</span>
-				</span>	
-	  	</li> -->
 	  	</ul>
 	  </div>
 

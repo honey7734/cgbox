@@ -1,3 +1,4 @@
+<%@page import="vo.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,7 +15,13 @@
 
 <script>
 $(function(){
-	 
+<%
+	// 로그인 되지않은 회원만 접근하는 파일이므로
+	// 로그인 세션이 있는 경우 에러가 날 수 있으니 세션을 삭제해준다.
+	session.removeAttribute("loginmember");
+					
+%>
+	
   //네비게이션 탭 페이지 전환 메소드
   $(".nav-tabs a").click(function(){
     $(this).tab('show');
@@ -31,12 +38,17 @@ $(function(){
 		type : 'post',
 		success : function(res) {
 			alert(res.flag);
+			if(res.chk){
+				location.href="reservation.jsp";
+			}
+			
 		},
 		error : function(xhr) {
 			alert("상태 : " + xhr.status)
 		},
 		dataType : 'json'
 	})
+	
 	return false;
 		
   })
@@ -226,7 +238,7 @@ nav{
       
       -->
 	  <div class="container">
-	    <form id="nonMemForm" action="<%=request.getContextPath()%>/nonmemberReservation.do" method="post">
+	    <form id="nonMemForm" action="<%=request.getContextPath()%>/nonmemberReservation.do" method="post" class="needs-validation" novalidate>
 			<table class="table table-borderless">
 			  <thead class="thead-light">
 			    <tr>
@@ -238,30 +250,36 @@ nav{
 			      <td>이메일</td>
 			      <td>
 			       <div class="input-group">
-					<input name="mail1" type="text" class="form-control" placeholder="ex) abc123">
+					<input name="mail1" type="text" class="form-control" placeholder="ex) abc123" required>
 					<div class="input-group-append">
 					   <span class="input-group-text">@</span>
 					</div>
-					<input name="mail2" type="text" class="form-control" placeholder="exmaple.com">
+					<input name="mail2" type="text" class="form-control" placeholder="exmaple.com" required>
 				   </div>
 	 			 </td>
 			    </tr>
 			    <tr>
 			      <td>생년월일(8자리)</td>
 			      <td>
-					<input name="nonmember_birth" type="text" class="form-control" placeholder="ex) 19000101">
+					<input name="nonmember_birth" type="text" class="form-control" placeholder="ex) 19000101" required>
+					<div class="valid-feedback">입력되었습니다</div>
+    				<div class="invalid-feedback">생년월일을 입력해주세요</div>
 				  </td>
 			    </tr>
 			    <tr>
 			      <td>비밀번호</td>
 			      <td>
-			        <input name="nonmember_pass" type="password" class="form-control" autoComplete="on">
+			        <input name="nonmember_pass" type="password" class="form-control" autoComplete="on" required>
+			        <div class="valid-feedback">입력되었습니다</div>
+    				<div class="invalid-feedback">비밀번호를 입력해주세요</div>
 			      </td>
 			    </tr>
 			    <tr>
 			      <td>비밀번호확인</td>
 			      <td>
-			        <input name="nonmember_passchk" type="password" class="form-control">
+			        <input name="nonmember_passchk" type="password" class="form-control" required>
+			        <div class="valid-feedback">입력되었습니다</div>
+    				<div class="invalid-feedback">비밀번호확인을 입력해주세요</div>
 			      </td>
 			    </tr>
 			  </tbody>
@@ -281,7 +299,9 @@ nav{
       <p style="color: gray">비회원으로 예매하신 고객님은 개인정보(이메일, 생년월일, 비밀번호)를 입력해주세요</p>
       <div class="row" >
       
-		  <div class="container col">
+		  <div class="container col">  
+		  
+		  <form action="<%=request.getContextPath()%>/nonmemberReservationCheck.do" method="post" class="needs-validation" novalidate>
 		  	<h4 style="font-weight : bold">비회원 예매확인</h4>
 		  	<table class="table table-borderless">
 			  <thead>
@@ -296,25 +316,29 @@ nav{
 			    <tr>
 			      <td>생년월일(8자리)</td>
 			      <td>
-			      	<input type="text" class="form-control" placeholder="ex) 19000101">
+			      	<input type="text" class="form-control" placeholder="ex) 19000101" required name="nonmember_birth">
+			      	<div class="valid-feedback">입력되었습니다</div>
+    				<div class="invalid-feedback">생년월일을 입력해주세요</div>
 			      </td>
 			    </tr>
 			    <tr>
 			      <td>이메일</td>
 			      <td>
 			      	<div class="input-group">
-					   <input type="text" class="form-control inputmail" placeholder="ex) abc123">
+					   <input type="text" class="form-control inputmail" placeholder="ex) abc123" required name="mail1">
 					   <div class="input-group-append">
 					     <span class="input-group-text">@</span>
 					   </div>
-					   <input type="text" class="form-control inputmail" placeholder="exmaple.com">
+					   <input type="text" class="form-control inputmail" placeholder="exmaple.com" required name="mail12">
 					 </div>
 			      </td>
 			    </tr>
 			    <tr>
 			      <td>비밀번호</td>
 			      <td>
-		          	<input type="password" class="form-control">
+		          	<input type="password" class="form-control" required name="nonmember_pass">
+		          	<div class="valid-feedback">입력되었습니다</div>
+    				<div class="invalid-feedback">비밀번호확인을 입력해주세요</div>
 		      	  </td>
 			    </tr>
 			  </tbody>
@@ -323,8 +347,10 @@ nav{
 			<hr>
 			
 			<div class="d-flex justify-content-center">
-		  		<button type="button" class="btn btn-danger">비회원 예매확인</button>
+		  		<button type="submit" class="btn btn-danger">비회원 예매확인</button>
 			</div>
+		  </form>
+		  
 		  </div>
 		  
 		  <div class="container col">
@@ -352,13 +378,6 @@ nav{
 </div>
 
 
-
-
-<!-- <footer>
-	<div>
-		푸터
-	</div>
-</footer> -->
 
 <!-- Modal -->
   <div class="modal fade" id="mailModal">

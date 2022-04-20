@@ -5,4 +5,12 @@
 	<select id="selectAllByMtheaterNo" parameterClass="int" resultClass="theaterVO">
 		select * from theater where mtheater_no = #no#
 	</select>
+	
+	<select id="selectAllByTheaterNo" parameterClass="int" resultClass="theaterVO">
+		select * from theater where theater_no = #tno#
+	</select>
+	
+	<select id="selectTheaterNoByScreenNo" parameterClass="int" resultClass="int">
+		select theater_no from screen where screen_no = #sno#
+	</select>
 </sqlMap>

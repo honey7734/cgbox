@@ -7,16 +7,19 @@
 	if(login != null){
 	%>
 	{
+	
+		"chk"  : 1, 
 		"flag" : "<%=login.getMember_name() %>님 로그인 성공"
 		<%
 			//성공시 세션으로 저장
-			session.setAttribute("member", login);
+			session.setAttribute("loginmember", login);
 		%>
 	}
 	<%
 	}else{
 	%>
 	{
+		"chk"  : 0,
 		"flag" : "실패"	
 	}	
 	<%

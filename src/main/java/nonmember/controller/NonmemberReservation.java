@@ -49,18 +49,10 @@ public class NonmemberReservation extends HttpServlet {
 		session.setAttribute("nonMember", vo);
 		
 		// jsp문서로 이동
-		response.sendRedirect(request.getContextPath() + "/ticketing/sessionTest.jsp");
+		//테스트용 -> response.sendRedirect(request.getContextPath() + "/ticketing/sessionTest.jsp");
+		response.sendRedirect(request.getContextPath() + "/ticketing/reservation.jsp");
 		
-		
-		
-		
-		//비회원 멤버 추가
-//		INonMemberService service = NonMemberServiceImpl.getInstance();
-//		
-//		int res = service.insertNonMember(vo);
-//		
-//		request.setAttribute("nonMemInsert", res);
-//		request.getRequestDispatcher("ticketing/test.jsp").forward(request, response);
+
 	
 	}
 

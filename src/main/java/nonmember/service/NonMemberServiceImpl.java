@@ -20,16 +20,14 @@ public class NonMemberServiceImpl implements INonMemberService {
 	}
 	
 	@Override
-	public int insertNonMember(NonMemberVO vo) {
-		int result = 0;
+	public void insertNonMember(NonMemberVO vo) {
 		
 		try {
-			result = dao.insertNonMember(vo);
+			dao.insertNonMember(vo);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return result;
 	}
 
 	@Override

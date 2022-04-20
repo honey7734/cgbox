@@ -6,7 +6,7 @@ import vo.NonMemberVO;
 
 public interface INonMemberDao {
 	
-	public int insertNonMember(NonMemberVO vo) throws SQLException;
+	public void insertNonMember(NonMemberVO vo) throws SQLException;
 
 	public void insertCustomer(int num) throws SQLException;
 	

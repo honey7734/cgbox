@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import member.service.IMemberService;
 import member.service.MemberServiceImpl;
@@ -27,18 +28,17 @@ public class MemberLogin extends HttpServlet {
 
 		map.put("id", request.getParameter("member_id"));
 		map.put("pass", request.getParameter("member_pass"));
-
-		System.out.println(map.get("id"));
 		
 		IMemberService service = MemberServiceImpl.getInstance();
 		
-		System.out.println(map.get("id"));
-		
 		//로그인 된 멤버 정보
 		MemberVO loginMember = service.loginMember(map);
+		
+		//로그인 처리 확인용 샘플
 		request.setAttribute("login", loginMember);
 		request.getRequestDispatcher("ticketing/test.jsp").forward(request, response);
-		
+			
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
