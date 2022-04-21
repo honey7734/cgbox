@@ -36,4 +36,9 @@ public class NonMemberDaoImpl implements INonMemberDao {
 		return (int) client.queryForObject("nonmember.selectMaxCustomer");
 	}
 
+	@Override
+	public int selectNonmemberCount(NonMemberVO vo) throws SQLException {
+		return (int) client.queryForObject("nonmember.selectNonmemberCount", vo);
+	}
+
 }

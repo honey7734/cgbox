@@ -46,5 +46,18 @@ public class MTheaterServiceImpl implements IMTheaterService {
 		
 		return vo;
 	}
+	
+	@Override
+	public String selectNameByNo(int mhno) {
+		String result = null;
+		
+		try {
+			result = dao.selectNameByNo(mhno);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 
 }

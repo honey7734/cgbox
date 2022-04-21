@@ -25,5 +25,12 @@
 		select max(customer_no) from customer
 	</select>
 	
+	<select id="selectNonmemberCount" parameterClass="nonMemberVO" resultClass="int">
+		select count(*) from nonmember 
+		where nonmember_birth = #nonmember_birth# 
+		  and nonmember_mail = #nonmember_mail# 
+		  and nonmember_pass = #nonmember_pass#
+	</select>
+	
 	
 </sqlMap>

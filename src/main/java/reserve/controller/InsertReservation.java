@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
+import cgbox.vo.ReserveVO;
+import cgbox.vo.SeatVO;
 import nonmember.service.INonMemberService;
 import nonmember.service.NonMemberServiceImpl;
 import reserve.service.IReserveService;
@@ -25,8 +27,8 @@ import theater.service.TheaterServiceImpl;
 import ticket.service.ITicketService;
 import ticket.service.TicketServiceImpl;
 import vo.NonMemberVO;
-import vo.ReserveVO;
-import vo.SeatVO;
+/*import vo.ReserveVO;*/
+/*import vo.SeatVO;*/
 
 @WebServlet("/InsertReservation.do")
 public class InsertReservation extends HttpServlet {
@@ -91,11 +93,10 @@ public class InsertReservation extends HttpServlet {
 		
 		
 		//예약 insert : 좌석번호(seatnoList에 여러개 있음), 상영일자번호(screenNo), 상영일자(screen_day)
-		for(int seatno : seatnoList) {
-			//티켓 INSERT : 고객번호(cstomerNo)
-			tiservice.insertNew(cstomerNo);
+		//티켓 INSERT : 고객번호(cstomerNo)
+		tiservice.insertNew(cstomerNo);
 
-			
+		for(int seatno : seatnoList) {
 			
 			ReserveVO rvo = new ReserveVO();
 			rvo.setSeat_no(seatno);

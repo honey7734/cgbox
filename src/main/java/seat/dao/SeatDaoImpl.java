@@ -4,8 +4,9 @@ import java.sql.SQLException;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
-import kr.or.ddit.util.SqlMapClientFactory;
-import vo.SeatVO;
+import cgbox.vo.SeatVO;
+import kr.or.ddit.ibatis.config.SqlMapClientFactory;
+/*import vo.SeatVO;*/
 
 public class SeatDaoImpl implements ISeatDao {
 	private SqlMapClient client;
@@ -22,6 +23,10 @@ public class SeatDaoImpl implements ISeatDao {
 	@Override
 	public int selectSeatNo(SeatVO vo) throws SQLException {
 		return (int) client.queryForObject("seat.selectSeatNo", vo);
+	}
+	@Override
+	public SeatVO selectSeatByNo(int sno) throws SQLException {
+		return (SeatVO) client.queryForObject("seat.selectSeatByNo", sno);
 	}
 
 }

@@ -9,7 +9,7 @@ import com.ibatis.sqlmap.client.SqlMapClient;
 import kr.or.ddit.prod.dao.IProdDao;
 import kr.or.ddit.prod.dao.ProdDaoImpl;
 import kr.or.ddit.prod.vo.ProdVO;
-import kr.or.ddit.util.SqlMapClientFactory;
+import kr.or.ddit.ibatis.config.SqlMapClientFactory;
 
 public class ProdServiceImpl implements IProdService {
 	private static IProdService service;

@@ -5,4 +5,7 @@
 	<insert id="insertNew" parameterClass="reserveVO">
 		insert into reserve values(#seat_no#, #screen_no#, (select nvl(max(ticket_no), 0) from ticket), #screen_day#)
 	</insert>
+	<select id="selectReserveByTicket" parameterClass="int" resultClass="reserveVO">
+		select * from reserve where TICKET_NO = #no#
+	</select>
 </sqlMap>

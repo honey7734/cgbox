@@ -6,4 +6,8 @@
 	<select id="selectScreenList" parameterClass="screenVO" resultClass="screenVO">
 		select * from screen where movie_no = #movie_no# and theater_no = #theater_no#
 	</select>
+	
+	<select id="selectAllByno" parameterClass="int" resultClass="screenVO">
+		select * from screen where screen_no = #no#
+	</select>
 </sqlMap>

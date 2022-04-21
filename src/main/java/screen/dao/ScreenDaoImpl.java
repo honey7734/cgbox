@@ -5,8 +5,9 @@ import java.util.List;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
+import cgbox.vo.ScreenVO;
 import kr.or.ddit.ibatis.config.SqlMapClientFactory;
-import vo.ScreenVO;
+/*import vo.ScreenVO;*/
 
 public class ScreenDaoImpl implements IScreenDao {
 
@@ -25,6 +26,10 @@ public class ScreenDaoImpl implements IScreenDao {
 	@Override
 	public List<ScreenVO> selectScreenList(ScreenVO vo) throws SQLException {
 		return client.queryForList("screen.selectScreenList", vo);
+	}
+	@Override
+	public ScreenVO selectAllByno(int sno) throws SQLException {
+		return (ScreenVO) client.queryForObject("screen.selectAllByno", sno);
 	}
 
 }

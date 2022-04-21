@@ -30,8 +30,8 @@ public class TicketDaoImpl implements ITicketDao {
 	
 	
 	@Override
-	public List<TicketVO> selectAllticketByNonMember(NonMemberVO nvo) throws SQLException {
-		return client.queryForList("ticket.selectAllticketByNonMember", nvo);
+	public TicketVO selectAllticketByNonMember(NonMemberVO nvo) throws SQLException {
+		return (TicketVO) client.queryForObject("ticket.selectAllticketByNonMember", nvo);
 	}
 
 }

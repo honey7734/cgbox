@@ -11,5 +11,7 @@ public interface INonMemberDao {
 	public void insertCustomer(int num) throws SQLException;
 	
 	public int selectMaxCustomer() throws SQLException;
+	
+	public int selectNonmemberCount(NonMemberVO vo) throws SQLException;
 
 }

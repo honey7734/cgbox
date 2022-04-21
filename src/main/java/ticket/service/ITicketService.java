@@ -7,5 +7,5 @@ import vo.TicketVO;
 
 public interface ITicketService {
 	public void insertNew(int cno);
-	public List<TicketVO> selectAllticketByNonMember(NonMemberVO nvo);
+	public TicketVO selectAllticketByNonMember(NonMemberVO nvo);
 }

@@ -9,6 +9,6 @@ import vo.TicketVO;
 public interface ITicketDao {
 	public void insertNew(int cno) throws SQLException;
 	
-	public List<TicketVO> selectAllticketByNonMember(NonMemberVO nvo) throws SQLException;
+	public TicketVO selectAllticketByNonMember(NonMemberVO nvo) throws SQLException;
 	
 }

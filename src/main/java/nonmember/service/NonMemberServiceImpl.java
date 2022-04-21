@@ -52,4 +52,18 @@ public class NonMemberServiceImpl implements INonMemberService {
 		return result;
 	}
 
+	@Override
+	public int selectNonmemberCount(NonMemberVO vo) {
+		int result = -1;
+		
+		try {
+			result = dao.selectNonmemberCount(vo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return result;
+	}
+
 }

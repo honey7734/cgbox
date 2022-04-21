@@ -10,4 +10,8 @@
 	<select id="selectAllByName" parameterClass="string" resultClass="mtheaterVO">
 		select * from mtheater where mtheater_name = #name#
 	</select>
+	
+	<select id="selectNameByNo" parameterClass="int" resultClass="String">
+		select mtheater_name  from  mtheater where mtheater_no = #mno#
+	</select>
 </sqlMap>

@@ -3,7 +3,9 @@ package theater.dao;
 import java.sql.SQLException;
 import java.util.List;
 
-import vo.TheaterVO;
+import cgbox.vo.TheaterVO;
+
+/*import vo.TheaterVO;*/
 
 public interface ITheaterDao {
 	

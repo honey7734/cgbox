@@ -1,4 +1,3 @@
-<%@page import="vo.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,7 +12,23 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/jquery.serializejson.min.js"></script>
 
+<%
+	String msg = request.getParameter("msg");
+	if(msg==null) msg = "";
+	String exist = request.getParameter("exist");
+	if(exist == null) exist = "";
+%>
 <script>
+
+if("<%=msg%>"!=""){
+	alert("예매정보가 존재하지 않습니다");
+}
+
+if("<%=exist%>" != ""){
+	alert("이미 예약내역이 존재합니다")
+}
+
+
 $(function(){
 <%
 	// 로그인 되지않은 회원만 접근하는 파일이므로
@@ -329,7 +344,7 @@ nav{
 					   <div class="input-group-append">
 					     <span class="input-group-text">@</span>
 					   </div>
-					   <input type="text" class="form-control inputmail" placeholder="exmaple.com" required name="mail12">
+					   <input type="text" class="form-control inputmail" placeholder="exmaple.com" required name="mail2">
 					 </div>
 			      </td>
 			    </tr>

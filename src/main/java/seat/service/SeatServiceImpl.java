@@ -2,9 +2,10 @@ package seat.service;
 
 import java.sql.SQLException;
 
+import cgbox.vo.SeatVO;
 import seat.dao.ISeatDao;
 import seat.dao.SeatDaoImpl;
-import vo.SeatVO;
+/*import vo.SeatVO;*/
 
 public class SeatServiceImpl implements ISeatService {
 	private ISeatDao dao;
@@ -30,6 +31,18 @@ public class SeatServiceImpl implements ISeatService {
 		
 		
 		return result;
+	}
+	@Override
+	public SeatVO selectSeatByNo(int sno) {
+		SeatVO vo = null;
+		
+		try {
+			vo = dao.selectSeatByNo(sno);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return vo;
 	}
 
 }

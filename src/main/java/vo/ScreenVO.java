@@ -2,7 +2,7 @@ package vo;
 
 public class ScreenVO {
 	private int    screen_no   ;
-	private String movie_no    ;
+	private int    movie_no    ;
 	private int theater_no  ;
 	private String screen_start;
 	private String screen_end  ;
@@ -14,10 +14,10 @@ public class ScreenVO {
 	public void setScreen_no(int screen_no) {
 		this.screen_no = screen_no;
 	}
-	public String getMovie_no() {
+	public int getMovie_no() {
 		return movie_no;
 	}
-	public void setMovie_no(String movie_no) {
+	public void setMovie_no(int movie_no) {
 		this.movie_no = movie_no;
 	}
 	public int getTheater_no() {

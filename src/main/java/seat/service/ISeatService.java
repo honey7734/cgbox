@@ -1,9 +1,11 @@
 package seat.service;
 
-import vo.SeatVO;
+import cgbox.vo.SeatVO;
+
+/*import vo.SeatVO;*/
 
 public interface ISeatService {
 	
 	public int selectSeatNo(SeatVO vo);
-
+	public SeatVO selectSeatByNo(int sno);
 }

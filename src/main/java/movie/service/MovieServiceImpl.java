@@ -5,7 +5,8 @@ import java.util.List;
 
 import movie.dao.IMovieDao;
 import movie.dao.MovieDaoImpl;
-import vo.MovieVO;
+/*import vo.MovieVO;*/
+import movie.vo.MovieVO;
 
 public class MovieServiceImpl implements IMovieService {
 	
@@ -31,5 +32,41 @@ public class MovieServiceImpl implements IMovieService {
 		
 		return list;
 	}
+	
+	@Override
+	public String selectNameByNo(String mno) {
+		String result = null;
+		
+		try {
+			result = dao.selectNameByNo(mno);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public int insertMovie(MovieVO vo) {
+		// TODO Auto-generated method stub
+		return dao.insertMovie(vo);
+	}
 
+	@Override
+	public List<String> selectMovieName() {
+		// TODO Auto-generated method stub
+		return dao.selectMovieName();
+	}
+
+//	@Override
+//	public MovieVO selectImg(String movieName) {
+//		// TODO Auto-generated method stub
+//		return dao.selectImg(movieName);
+//	}
+
+	@Override
+	public String selectImg(String movieName) {
+		// TODO Auto-generated method stub
+		return dao.selectImg(movieName);
+	}
 }

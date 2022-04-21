@@ -1,10 +1,12 @@
 package reserve.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
+import cgbox.vo.ReserveVO;
 import reserve.dao.IReserveDao;
 import reserve.dao.ReserveDaoImpl;
-import vo.ReserveVO;
+/*import vo.ReserveVO;*/
 
 public class ReserveServiceImpl implements IReserveService {
 	
@@ -26,6 +28,18 @@ public class ReserveServiceImpl implements IReserveService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	@Override
+	public List<ReserveVO> selectReserveByTicket(int tno) {
+		List<ReserveVO> list = null;
+		
+		try {
+			list = dao.selectReserveByTicket(tno);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 
 }

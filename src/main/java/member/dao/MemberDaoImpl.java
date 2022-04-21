@@ -5,8 +5,9 @@ import java.util.Map;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
+import cgbox.vo.MemberVO;
 import kr.or.ddit.ibatis.config.SqlMapClientFactory;
-import vo.MemberVO;
+/*import vo.MemberVO;*/
 
 public class MemberDaoImpl implements IMemberDao {
 	private SqlMapClient client;

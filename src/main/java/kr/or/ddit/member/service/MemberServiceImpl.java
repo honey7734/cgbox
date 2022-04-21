@@ -1,8 +1,9 @@
 package kr.or.ddit.member.service;
 
+import cgbox.vo.MemberVO;
 import kr.or.ddit.member.dao.IMemberDao;
 import kr.or.ddit.member.dao.MemberDaoImpl;
-import kr.or.ddit.member.vo.MemberVO;
+
 
 public class MemberServiceImpl implements IMemberService{
 	

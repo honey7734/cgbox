@@ -3,9 +3,10 @@ package member.service;
 import java.sql.SQLException;
 import java.util.Map;
 
+import cgbox.vo.MemberVO;
 import member.dao.IMemberDao;
 import member.dao.MemberDaoImpl;
-import vo.MemberVO;
+/*import vo.MemberVO;*/
 
 public class MemberServiceImpl implements IMemberService {
 	

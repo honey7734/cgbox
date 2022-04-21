@@ -6,4 +6,8 @@
 	<select id="selectSeatNo" parameterClass="seatVO" resultClass="int">
 		select seat_no from seat WHERE seat_row = #seat_row# and seat_col = #seat_col# and theater_no = #theater_no#
 	</select>
+	
+	<select id="selectSeatByNo" parameterClass="int" resultClass="seatVO">
+		select seat_row, seat_col from seat where SEAT_NO = #no#
+	</select>
 </sqlMap>

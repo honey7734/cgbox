@@ -1,4 +1,4 @@
-<%@page import="vo.MemberVO"%>
+<%@page import="cgbox.vo.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%

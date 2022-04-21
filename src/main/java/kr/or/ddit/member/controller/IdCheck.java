@@ -29,13 +29,12 @@ public class IdCheck extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String input = request.getParameter("key");
+		String input = request.getParameter("member_id");
 		
 		IMemberService service = MemberServiceImpl.getInstance();
 		
 		String id = service.idCheck(input);
-//		System.out.println(input);
-//		System.out.println("id : " + id);
+
 		request.setAttribute("gogogo", id);
 		
 		request.getRequestDispatcher("member/idcheck.jsp").forward(request, response);

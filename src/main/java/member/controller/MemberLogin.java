@@ -9,11 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import cgbox.vo.MemberVO;
 import member.service.IMemberService;
 import member.service.MemberServiceImpl;
-import vo.MemberVO;
+/*import vo.MemberVO;*/
 
 
 @WebServlet("/memberLogin.do")

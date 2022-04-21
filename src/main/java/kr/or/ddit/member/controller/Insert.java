@@ -13,10 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
 
+import cgbox.vo.MemberVO;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
 
-import kr.or.ddit.member.vo.MemberVO;
+
 
 /**
  * Servlet implementation class Insert
@@ -40,15 +41,8 @@ public class Insert extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		request.setAttribute("application/json; charset=utf-8", response);
 		
-		
 		MemberVO vo = new MemberVO();
-		//////
 		
-//		vo.setMem_id(request.getParameter("mem_id"));
-//		vo.setMem_name(request.getParameter("mem_name"));
-		
-		// D:\C_Lib\beanUtil\commons-beanutils-1.8.3-bin\commons-beanutils-1.8.3\\commons-beanutils-1.8.3.jar
-		// D:\C_Lib\beanUtil\commons-logging-1.1.1-bin\commons-logging-1.1.1\\commons-logging-1.1.1.jar瑜� 異붽��빐�빞�븳�떎.
 		 try {
 	         BeanUtils.populate(vo, request.getParameterMap());
 	      } catch (IllegalAccessException e) {
@@ -65,25 +59,9 @@ public class Insert extends HttpServlet {
 		 vo.setCustomer_no(num);
 		 service.insertCustomerNo(num);
 		 String res = service.insertMember(vo);
-		 
-		 
-		
-		 System.out.println(num);
-
-		 
-//		 vo.setCustomer_no(num);
-		 
-//		 vo.setMember_id(res);
-		 
-		 // 4. 寃곌낵媛믪쓣 request�뿉 ���옣�븯湲�
+	
 		 request.setAttribute("gogogo", res);
-//		 request.setAttribute("num", num);
-		 
-		 
-//		 request.setAttribute("dododo", vo.getMember_id());
-//		 request.setAttribute("dododo", vo.getCustomer_no());
-//		 System.out.println(vo);
-		 // 5. jsp濡� foward
+
 		 request.getRequestDispatcher("member/result.jsp").forward(request, response);
 	}
 

@@ -32,4 +32,9 @@ public class MTheatherDaoImpl implements IMTheaterDao {
 		return (MTheaterVO) client.queryForObject("mtheater.selectAllByName",name);
 	}
 
+	@Override
+	public String selectNameByNo(int mtno) throws SQLException {
+		return (String) client.queryForObject("mtheater.selectNameByNo", mtno);
+	}
+
 }

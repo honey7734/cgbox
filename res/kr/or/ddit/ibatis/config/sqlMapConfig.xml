@@ -14,16 +14,37 @@
  	 
 	
  	 
- 	 <typeAlias alias="memberVO" type="vo.MemberVO" />
  	 <typeAlias alias="nonMemberVO" type="vo.NonMemberVO" />
  	 <typeAlias alias="mtheaterVO" type="vo.MTheaterVO" />
- 	 <typeAlias alias="movieVO" type="vo.MovieVO" />
- 	 <typeAlias alias="screenVO" type="vo.ScreenVO" />
- 	 <typeAlias alias="theaterVO" type="vo.TheaterVO" />
- 	 <typeAlias alias="seatVO" type="vo.SeatVO" />
  	 <typeAlias alias="ticketVO" type="vo.TicketVO" />
- 	 <typeAlias alias="reserveVO" type="vo.ReserveVO" />
+ 	 <typeAlias alias="prodVO" type="kr.or.ddit.prod.vo.ProdVO" />
+	<typeAlias alias="mtheaterVO1" type="kr.or.ddit.mypage.vo.MtheaterVO" />
+ 	 <typeAlias alias="qnaVO" type="kr.or.ddit.mypage.vo.QnaVO" />
+ 	 
+ 	 <!-- 태정 -->
+ 	 <typeAlias alias="cartprodVO" type="cgbox.vo.CartProdVO" />
+     <typeAlias alias="allcartVO" type="cgbox.vo.allcartVO" />
+     <typeAlias alias = "selectmconVO" type = "cgbox.vo.selectmconVO"/>
+     <typeAlias alias = "minfoVO" type = "cgbox.vo.MovieInfoVO"/>
+     <typeAlias alias = "theaterVO" type = "cgbox.vo.TheaterVO"/>  
+     <typeAlias alias = "seatVO" type = "cgbox.vo.SeatVO"/>  
+     
+ 	 <!-- 혁진 -->
+	 <typeAlias alias="eventVO" type="cgbox.vo.EventVO"/>
+	 <typeAlias alias="noticeVO" type="cgbox.vo.NoticeVO"/>
+	 <typeAlias alias="FAQVO" type="cgbox.vo.FAQVO"/>
+ 	 <typeAlias alias="memberVO" type="cgbox.vo.MemberVO"/>
+
+
+	<!-- 현수오빠 중복alias-->
+	 <typeAlias alias="MovieVO" type="movie.vo.MovieVO"/>
+	
+     <!-- 태정언니 중복alias -->
+     <typeAlias alias = "reserveVO" type = "cgbox.vo.ReserveVO"/>    
+     <typeAlias alias = "screenVO" type = "cgbox.vo.ScreenVO"/>  
  
+ 	  
+ 	  
  	  <transactionManager type="JDBC">
  	  	<dataSource type="SIMPLE">
  	  		<property name="JDBC.Driver" value="${driver}"/>
@@ -42,7 +63,23 @@
 	 <sqlMap resource="kr/or/ddit/ibatis/mapping/theater.xml"/> 	
 	 <sqlMap resource="kr/or/ddit/ibatis/mapping/seat.xml"/> 	
 	 <sqlMap resource="kr/or/ddit/ibatis/mapping/ticket.xml"/> 	
-	 <sqlMap resource="kr/or/ddit/ibatis/mapping/reserve.xml"/> 	
-
+	 <sqlMap resource="kr/or/ddit/ibatis/mapping/reserve.xml"/> 
+	 <sqlMap resource="kr/or/ddit/ibatis/mapping/prod.xml"/> 	
+	 <sqlMap resource="kr/or/ddit/ibatis/mapping/mypage.xml"/> 
+	 		
+	  <!-- 태정 --> 
+	 <sqlMap resource="kr/or/ddit/ibatis/mapping/cart.xml"/> 	
+     <sqlMap resource="kr/or/ddit/ibatis/mapping/pay.xml"/>	
+	 
+	 <!-- 혁진 -->
+	  <sqlMap resource="kr/or/ddit/ibatis/mapping/event.xml"/>
+	  <sqlMap resource="kr/or/ddit/ibatis/mapping/notice.xml"/>
+	  <sqlMap resource="kr/or/ddit/ibatis/mapping/FAQ.xml"/>
+	  
+	  <!-- 현수 -->
+	 <!--   <sqlMap resource="kr/or/ddit/ibatis/mapping/memberTest.xml"/> -->
+	   
+	  
+	
 </sqlMapConfig>
 

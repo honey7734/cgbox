@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import cgbox.vo.ScreenVO;
+import cgbox.vo.TheaterVO;
 import mtheater.service.IMTheaterService;
 import mtheater.service.MTheaterServiceImpl;
 import screen.service.IScreenService;
@@ -22,8 +24,8 @@ import screen.service.ScreenServiceImpl;
 import theater.service.ITheaterService;
 import theater.service.TheaterServiceImpl;
 import vo.MTheaterVO;
-import vo.ScreenVO;
-import vo.TheaterVO;
+/*import vo.ScreenVO;*/
+/*import vo.TheaterVO;*/
 
 
 @WebServlet("/screenList.do")
@@ -47,7 +49,7 @@ public class ScreenList extends HttpServlet {
 		
 		for(int tno : tlist) {
 			ScreenVO parameterVO = new ScreenVO();
-			parameterVO.setMovie_no(request.getParameter("movie_no"));
+			parameterVO.setMovie_no(Integer.parseInt(request.getParameter("movie_no")));
 			parameterVO.setTheater_no(tno);
 			
 			//tno를 이용해 해당번호를 가진 상영관의 이름과 종류를 구해 키값으로 넘겨준다

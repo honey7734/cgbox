@@ -3,7 +3,7 @@ package vo;
 public class TicketVO {
 	private int ticket_no  ;
 	private int customer_no;
-	
+	private String ticket_status;
 	
 	public int getTicket_no() {
 		return ticket_no;
@@ -17,4 +17,11 @@ public class TicketVO {
 	public void setCustomer_no(int customer_no) {
 		this.customer_no = customer_no;
 	}
+	public String getTicket_status() {
+		return ticket_status;
+	}
+	public void setTicket_status(String ticket_status) {
+		this.ticket_status = ticket_status;
+	}
+	
 }

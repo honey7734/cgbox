@@ -1,11 +1,13 @@
 package reserve.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
+import cgbox.vo.ReserveVO;
 import kr.or.ddit.ibatis.config.SqlMapClientFactory;
-import vo.ReserveVO;
+/*import vo.ReserveVO;*/
 
 public class ReserveDaoImpl implements IReserveDao {
 
@@ -23,6 +25,11 @@ public class ReserveDaoImpl implements IReserveDao {
 	@Override
 	public void insertNew(ReserveVO vo) throws SQLException {
 		client.insert("reserve.insertNew",vo);
+	}
+	
+	@Override
+	public List<ReserveVO> selectReserveByTicket(int no) throws SQLException {
+		return client.queryForList("reserve.selectReserveByTicket",no);
 	}
 
 }

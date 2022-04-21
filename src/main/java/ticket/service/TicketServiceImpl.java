@@ -33,16 +33,16 @@ public class TicketServiceImpl implements ITicketService {
 		
 	}
 	@Override
-	public List<TicketVO> selectAllticketByNonMember(NonMemberVO nvo) {
-		List<TicketVO> list = null;
+	public TicketVO selectAllticketByNonMember(NonMemberVO nvo) {
+		TicketVO vo = null;
 		
 		try {
-			list= dao.selectAllticketByNonMember(nvo);
+			vo= dao.selectAllticketByNonMember(nvo);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return list;
+		return vo;
 	}
 
 }

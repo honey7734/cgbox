@@ -2,7 +2,9 @@ package member.service;
 
 import java.util.Map;
 
-import vo.MemberVO;
+import cgbox.vo.MemberVO;
+
+/*import vo.MemberVO;*/
 
 public interface IMemberService {
 	

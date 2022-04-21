@@ -2,7 +2,9 @@ package theater.service;
 
 import java.util.List;
 
-import vo.TheaterVO;
+import cgbox.vo.TheaterVO;
+
+/*import vo.TheaterVO;*/
 
 public interface ITheaterService {
 	

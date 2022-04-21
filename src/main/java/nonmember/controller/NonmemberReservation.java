@@ -34,23 +34,33 @@ public class NonmemberReservation extends HttpServlet {
 		String mail = request.getParameter("mail1") + "@" + request.getParameter("mail2"); 
 		vo.setNonmember_mail(mail);
 		
-		//vo의 값은 max값 검색 후 해당값 +1 으로 지정
 		INonMemberService service = NonMemberServiceImpl.getInstance();
+		//이미 예매내역이 존재하는 비회원인지
+		int count = service.selectNonmemberCount(vo);
 		
-		System.out.println(service.selectMaxCustomer());
+		if(count == 0) {
+			//존재하지 않으면
+			//vo의 값은 max값 검색 후 해당값 +1 으로 지정
+			System.out.println(service.selectMaxCustomer());
+			
+			int num = service.selectMaxCustomer() + 1;
+			
+			vo.setCustomer_no(num);
+			
+			
+			// 세선에 정보 저장하기
+			HttpSession session = request.getSession();
+			session.setAttribute("nonMember", vo);
+			
+			// jsp문서로 이동
+			//테스트용 -> response.sendRedirect(request.getContextPath() + "/ticketing/sessionTest.jsp");
+			response.sendRedirect(request.getContextPath() + "/ticketing/reservation.jsp");
+			
+		}else {
+			//존재하면
+			response.sendRedirect(request.getContextPath() + "/ticketing/NonMember_reservations.jsp?exist=Yes");
+		}
 		
-		int num = service.selectMaxCustomer() + 1;
-		
-		vo.setCustomer_no(num);
-		
-		
-		// 세선에 정보 저장하기
-		HttpSession session = request.getSession();
-		session.setAttribute("nonMember", vo);
-		
-		// jsp문서로 이동
-		//테스트용 -> response.sendRedirect(request.getContextPath() + "/ticketing/sessionTest.jsp");
-		response.sendRedirect(request.getContextPath() + "/ticketing/reservation.jsp");
 		
 
 	

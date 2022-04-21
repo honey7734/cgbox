@@ -10,4 +10,6 @@ public interface INonMemberService {
 	public void insertCustomer(int num);
 	
 	public int selectMaxCustomer();
+
+	public int selectNonmemberCount(NonMemberVO vo);
 }

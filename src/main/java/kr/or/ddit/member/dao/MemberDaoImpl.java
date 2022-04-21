@@ -4,8 +4,9 @@ import java.sql.SQLException;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
+import cgbox.vo.MemberVO;
 import kr.or.ddit.ibatis.config.SqlMapClientFactory;
-import kr.or.ddit.member.vo.MemberVO;
+
 
 public class MemberDaoImpl implements IMemberDao{
 	private SqlMapClient client;

@@ -6,7 +6,8 @@ import java.util.List;
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 import kr.or.ddit.ibatis.config.SqlMapClientFactory;
-import vo.TheaterVO;
+/*import vo.TheaterVO;*/
+import cgbox.vo.TheaterVO;
 
 public class TheaterDaoImpl implements ITheaterDao {
 	

@@ -3,9 +3,10 @@ package theater.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import cgbox.vo.TheaterVO;
 import theater.dao.ITheaterDao;
 import theater.dao.TheaterDaoImpl;
-import vo.TheaterVO;
+/*import vo.TheaterVO;*/
 
 public class TheaterServiceImpl implements ITheaterService{
 

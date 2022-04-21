@@ -1,3 +1,4 @@
+<%@page import="vo.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,18 +16,32 @@
 
 
 <script>
+	customer_no =0;
+	customer_no1 = '';
+<% 
+
+MemberVO vo = (MemberVO)session.getAttribute("loginMember");
+if(vo != null){
+%>
+customer_no1 = <%=vo.getCustomer_no() %>;
+<%
+}
+%>
+
 	// 상품 카테고리
 	category= "";
 	// 회원 고객번호로 장바구니가 있는지 확인하는 변수
-	customer_no =1;
+	// 세션 
+	
 	$(function(){
 		
 		// 스토어 전체항목 소개문구
 		storestr = "<h3>CGVBOX STORE</h3>";
-		
-		findCart();
+		if(customer_no != 0){
+			findCart();
+			cartCount();
+		}
 		prodList();
-		cartCount();
 		
 		
 		$('.menu').on('click',function(){
@@ -55,18 +70,43 @@
 			prodList();
 		})
 		
+		
 		$('.cartMove').on('click',function(){
-			alert("장바구니로 이동합니다.");
+			if(customer_no == 0){
+				if(confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로이동하시겠습니까?")){
+					window.location.href= "../myPage/myPage.jsp";
+				} else{
+				}
+			}else{
+				alert("장바구니로 이동합니다.");
+			}
+			
+
 		})
 		
 		$(document).on('click',".cart",function(){
-			prod_no = $(this).next().text();
-			
-			insertCartprod();
+			if(customer_no == 0){
+				if(confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로이동하시겠습니까?")){
+					window.location.href= "../myPage/myPage.jsp";
+				} else{
+				}
+			}else{
+				prod_no = $(this).next().text();
+				insertCartprod();
+			}
 		})
 		
 		$(document).on('click',".buy",function(){
-			alert("구매를 위해 장바구니로 이동합니다.")
+			if(customer_no == 0){
+				if(confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로이동하시겠습니까?")){
+					window.location.href= "../myPage/myPage.jsp";
+				} else{
+				}
+			}else{
+				prod_no = $(this).next().next().text();
+				insertCartprod2();
+			}
+			/* window.location.href=""; */
 		})
 	})
 	
@@ -74,7 +114,9 @@
 </script>
 
 <style>
-
+	body{
+ 		min-width: 1500px; 
+	}
 	.nav-item > .active {
 	
 	color : red !important;
@@ -197,13 +239,17 @@
 	height: 25px;
 	text-align:center;
   }
+  
+  .cartclick{
+  	border-left: 1px solid lightgray;
+  }
 </style>
 </head>
 <body>
 
 <div class="container" >
  <div class="leftMenu">
-  <ul class="nav" role="tablist">
+  <ul class="nav menuLine" role="tablist">
     <li class="nav-item">
       <strong class="nav-link active menu" data-toggle="pill" id="">전체</strong>
     </li>
@@ -225,12 +271,12 @@
   </ul>
 </div>  
 <div class="rightMenu">
-  <ul class="nav justify-content-end" role="tablist">
+  <ul class="nav justify-content-end cartclick" role="tablist">
   	<li>
   		 <strong class="nav-link cartMove">장바구니</strong>
   	</li>
   	<li>
-  		 <div class="cartCount"></div>
+  		 <div class="cartCount">0</div>
   	</li>
   </ul>
 </div>
@@ -240,7 +286,7 @@
   
     <div id="list"></div>
   
-  
+   <hr class="menuLine">
 </div>
 
 

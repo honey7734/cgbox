@@ -93,9 +93,9 @@ var insertCart = function(){
 				
 				success : function(res){
 					if(res>0){
-						alert("장바구니 생성");
+						console.log("장바구니 생성");
 					} else {
-						alert("장바구니 생성 실패");
+						console.log("장바구니 생성 실패");
 					}
 					
 				},
@@ -123,6 +123,32 @@ var insertCartprod = function(){
 						alert("장바구니 넣기 성공");
 					}else {
 						alert("장바구니에 있는 상품입니다.");
+					}
+				},
+				error : function(xhr){
+					alert("상태 : " + xhr.status);
+				},
+				dataType : 'json'
+			})
+	
+}
+
+
+var insertCartprod2 = function(){
+	$.ajax({
+				url : "/CGBOX/InsertCartprod.do",
+				type : "post",
+				data : {
+					"customer_no" : customer_no,
+					"prod_no" : prod_no
+				},
+				
+				success : function(res){
+					if(res>0){
+						cartCount();
+						alert("장바구니에 등록 되었습니다. 구매 페이지로 이동합니다.");
+					}else {
+						alert("장바구니에 등록 되어 있는 상품입니다. 구매 페이지로 이동합니다.");
 					}
 				},
 				error : function(xhr){

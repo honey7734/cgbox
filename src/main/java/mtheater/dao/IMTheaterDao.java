@@ -11,4 +11,6 @@ public interface IMTheaterDao {
 	
 	public MTheaterVO selectAllByName(String name) throws SQLException;
 	
+	public String selectNameByNo(int mtno) throws SQLException;
+
 }
