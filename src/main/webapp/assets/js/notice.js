@@ -17,7 +17,7 @@
 			}
 		},
 		error : function(xhr){
-			alert("상태 : " + xhr.status);
+			alert("수정 실패@@");
 		},
 		dataType : 'json'
 	})

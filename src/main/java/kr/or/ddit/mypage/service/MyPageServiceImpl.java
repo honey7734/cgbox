@@ -243,4 +243,16 @@ List<Map<String, Object>> list = null;
 		return cnt;
 		
 	}
+
+	@Override
+	public List<Map<String, Object>> payList(String customer_no) {
+		List<Map<String, Object>> list = null;
+		
+		try {
+			list = dao.payList(client, customer_no);
+		} catch (SQLException e) {
+			list = null;
+		}
+		return list;
+	}
 }

@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 
 import movie.service.IMovieService;
 import movie.service.MovieServiceImpl;
+import movie.vo.MovieVO;
 
 
 @WebServlet("/MovieImginsert.do")
@@ -28,17 +29,9 @@ public class MovieImginsert extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 
-		String[] movieNm = request.getParameterValues("movieName");
 		IMovieService service = MovieServiceImpl.getInstance();
 		
-		// 테스트용으로 0번째 뽑아서 출력
-		String img = service.selectImg(movieNm[0]);
-		System.out.println(img);
-		
-		List<String> list = new ArrayList<String>();
-		for(int i = 0; i < movieNm.length; i++) {
-			list.add(service.selectImg(movieNm[i]));
-		}
+		List<MovieVO> list = service.selectImg();
 		
 		Gson gson = new Gson();
 		

@@ -1,91 +1,77 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="kr">
+<html>
 <head>
-
-  <title>회원가입</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
- 
-  <script src="../js/jquery.serializejson.min.js"></script>	
-	
+
+	 <script src="../js/jquery.serializejson.min.js"></script>	
+	 
+<title>Insert title here</title>
+
 <script type="text/javascript">
-	$(function(){
-		
-		var xhr = new XMLHttpRequest();
-		
-		// 아이디 중복체크
-		$('#idchk').on('click', function(){
-// 			event.preventDefault();
-			
-			// 입력한 값을 가져온다.
-			idvalue = $('#uid').val().trim();
-			// 서버로 전송한다.
-			$.ajax({
-				url : '<%=request.getContextPath() %>/IdCheck.do',
-				type : 'get',
-				data : {"member_id" : idvalue},
-				success : function(res){
-// 					alert(res.flag);
-					$('#idspan').html(res.flag).css('color', 'red');	
-					
-				},
-				error : function(xhr){
-					alert("상태 : " + xhr.status);
-				},
-				dataType : 'json'
-			})
-		})
-		
 
+$(function(){
+	
+	var xhr = new XMLHttpRequest();
+	
+	// 아이디 중복체크
+	$('#idchk').on('click', function(){
+//			event.preventDefault();
 		
+		// 입력한 값을 가져온다.
+		idvalue = $('#uid').val().trim();
+		console.log(idvalue);
+		// 서버로 전송한다.
+		$.ajax({
+			url : '<%=request.getContextPath() %>/IdCheck.do',
+			type : 'get',
+			data : {"member_id" : idvalue},
+			success : function(res){
+					alert(res.flag);
+				$('#idspan').html(res.flag).css('color', 'red');	
+				
+			},
+			error : function(xhr){
+				alert("상태 : " + xhr.status);
+			},
+			dataType : 'json'
+		})
+	})
+	
 
 	
-	$('form').on('submit', function(){
-		// 입력한 모든 값을 가져온다.
-		/* id = $('#uid').val()
-		name = $('#uname').val()
-		date = $('#udate').val()
-		pwd = $('#pwd').val()
-		tel = $('#utel').val()
-		mail = $('#umail').val()
-		zip = $('#uzip').val()
-		add1 = $('#uadd1').val()
-		add2 = $('#uadd2').val() */
-		
-		
-		// 여러데이터를 한번에 받을 때 serialize를 사용한다. form의 name을 db와 일치시켜서 써야된다.
-		fdata1 = $('form').serialize();
-		fdata2 = $('form').serializeArray();
-		// 외부스크립트 추가해야함 ../js/jquery.serializejson.min.js
-		fdata3 = $('form').serializeJSON();
-		
-		console.log(fdata1);
-		console.log(fdata2);
-		console.log(fdata3);
-		
 
-		
-		 $.ajax({
+
+$('form').on('submit', function(){
+
+	fdata1 = $('form').serialize();
+	fdata2 = $('form').serializeArray();
+	fdata3 = $('form').serializeJSON();
+	
+	console.log(fdata1);
+	console.log(fdata2);
+	console.log(fdata3);
+	
+	if($("#pwd").val()!= $("#pwdcheck").val()){
+		alert("비밀번호와 비밀번호 확인이 다릅니다. 다시 확인하세요.");
+		return false;
+	}else{
+		$.ajax({
 			url : '<%=request.getContextPath() %>/Insert.do',
 			data : fdata3,
 			type : 'post',
 			success:function(res){
-				alert(res.flag);
-				if($("#pwd").val()!= $("#pwdcheck").val()){
-					alert("비밀번호와 비밀번호 확인이 다릅니다. 다시 확인하세요.");
-					return false;
-				}
 				
 				$('#joinspan').html(res.flag).css('color','red');
-				////////
-				
-				///////
+				if(res.flag == "회원가입 성공!!"){
+					$('#myModal').modal();
+				}
 			},
 			error : function(xhr){
 				alert("상태 : " + xhr.status)
@@ -93,15 +79,15 @@
 			dataType : 'json'
 				 
 		})
-		
 		return false;
-		
-	})
-		
+	}
+	
+})
+	
 })
 
-	
 </script>
+
 
 <style type="text/css">
 .container{
@@ -125,25 +111,22 @@ body{
 
 </head>
 <body>
-
 <div class="container">
   <br>
   <a href="../main/fix.jsp">
-  <img alt="" src="https://img.cgv.co.kr/R2014/images/common/logo/logoRed.png">
+    <img alt="" src="https://img.cgv.co.kr/R2014/images/common/logo/logoRed.png">
   </a>
   <h2>회원가입</h2>
   <br>
-  <form class="needs-validation" novalidate>
-  
-  	<div class="form-group">
+  <form action="/action_page.php" class="was-validated">
+    <div class="form-group">
       <label for="uid">아이디:</label>
-      <button id="idchk" type="button" class="btn btn-secondary btn-sm mb-2 mr-sm-2 " >
-      중복검사</button>
+      <button id="idchk" type="button" class="btn btn-secondary btn-sm mb-2 mr-sm-2">중복검사</button>
       <br>
       
       <input type="text" class="form-control col-sm-3" id="uid" placeholder="Enter userid" name="member_id" required>
 	  
-	  <span id = "idspan"></span>      
+	  <span id ="idspan"></span>      
       
       <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">아이디를 입력하세요.</div>
@@ -152,6 +135,9 @@ body{
   	<div class="form-group">
       <label for="pwd">비밀번호:</label>
       <input type="password" class="form-control col-sm-3" id="pwd" placeholder="Enter password" name="member_pass" required>
+      
+      <span id ="pwdspan"></span> 
+      
       <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">비밀번호를 입력하세요.</div>
     </div>
@@ -200,29 +186,32 @@ body{
 </div>
 
 
-
-
-
-<script>
-// Disable form submissions if there are invalid fields
-// (function() {
-//   'use strict';
-//   window.addEventListener('load', function() {
-//     // Get the forms we want to add validation styles to
-//     var forms = document.getElementsByClassName('needs-validation');
-//     // Loop over them and prevent submission
-//     var validation = Array.prototype.filter.call(forms, function(form) {
-//       form.addEventListener('submit', function(event) {
-//         if (form.checkValidity() === false) {
-//           event.preventDefault();
-//           event.stopPropagation();
-//         }
-//         form.classList.add('was-validated');
-//       }, false);
-//     });
-//   }, false);
-// })();
-</script>
+<!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+         <h2>메인화면으로 돌아가시겠습니까?</h2>
+         <button type="button" class="btn btn-danger" onclick="location.href='../main/fix.jsp'">확인</button>
+         <button type="button" class="btn btn-danger" onclick="location.href='#'">취소</button>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

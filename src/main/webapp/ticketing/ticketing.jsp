@@ -196,9 +196,64 @@ $(function() {
 	%>
 	
 	
+	
+	//좌석 id부여
+	$.ajax({
+		url : '<%=request.getContextPath()%>/insertSeatNo.do',
+		type:'get',
+		data : {
+			"tdata" : '<%=session.getAttribute("theaterNo")%>' 			
+		},
+		success : function(res) {
+			var sdiv = $('.seat')
+			$.each(res, function(i,v) {
+				sdiv.eq(i).attr('id', 's'+v.seat_no);
+			})
+			
+			disabledSeat();
+			
+		},
+		error : function() {
+			alert('상태 : ' + xhr.status)	;
+		},
+		dataType : 'json'
+	})
+	
+	
+	//예약된 좌석 리스트
+	function disabledSeat() {
+		//screenNo 세션
+		$.ajax({
+			url : '<%=request.getContextPath()%>/disabledSeat.do',
+			type:'get',
+			data : {
+				"scdata" : '<%=session.getAttribute("screenNo")%>' 			
+			},
+			success : function(res) {
+				var sid = $('.seat');
+				$(sid).each( function(i, v) {
+					$.each(res, function(j, k) {
+						if(sid.eq(i).attr('id') == 's' + k.seat_no){
+							sid.eq(i).css('background', 'gray');
+							sid.eq(i).css('color', 'lightgray');
+							sid.eq(i).attr('status', 'reserved');
+						}
+					})
+				})
+			},
+			error : function(xhr) {
+				alert('상태 : ' + xhr.status)	;
+			},
+			dataType : 'json'
+			
+		})
+	}
+	 
+	
 	//1표당 기준가격
-	var vprice = 8000;
+	var vprice = <%=session.getAttribute("tprice")%>;
 	$('#price span').text(vprice);
+	
 	
 	//인원수를 체크하여 1이하 8이상인 경우 disabled속성을 추가하는 함수
 	function chkcnt() {
@@ -246,6 +301,12 @@ $(function() {
 	})
 	
 	$('.seat').on('click', function() {
+		if($(this).attr('status') == 'reserved'){
+			//예약된 좌석은 선택할 수 없음
+			return false;
+		}
+		
+		
 		if($(this).hasClass('select')){
 			$('#minfo').text('이미 선택한 좌석입니다!');
 			$("#overModal").modal();
@@ -389,6 +450,9 @@ $(function() {
 		
 		//2. 결제 페이지로 이동
 	})
+	
+	
+	
 })
 </script>
 
@@ -461,7 +525,7 @@ $(function() {
 		<div class="col">
 			<ul class="breadcrumb justify-content-center">
   				<li class="breadcrumb-item active">CGBOX <%=session.getAttribute("mtheaterName") %>점</li>
-  				<li class="breadcrumb-item active"><%=session.getAttribute("theaterNo") %>관</li>
+  				<li class="breadcrumb-item active"><%=session.getAttribute("theaterName") %>관</li>
   				<li class="breadcrumb-item active">남은좌석 <span id="seatCnt" style="color: #dc3545; font-weight:bold;">121</span>/150</li>
 			</ul>
 		</div>
@@ -572,7 +636,7 @@ $(function() {
 		
 		
 		<div id="movieImgDiv" class="col-sm-3">
-  			<img id="movieImg" src="../image/영화포스터샘플.png">
+  			<img id="movieImg" src="<%=session.getAttribute("mvimg")%>">
 		</div>
 		
 		
@@ -599,7 +663,7 @@ $(function() {
 			    <br>
 			    <span class="infoText">상영관</span>
 			    <span id="thnoInfo">
-			    	<%=session.getAttribute("theaterNo") %>관
+			    	<%=session.getAttribute("theaterName") %>관
 			    </span>
 			    <br>
 			    <span class="infoText">인원</span>
@@ -684,7 +748,7 @@ $(function() {
 			CGBOX <span id="resmname"><%=session.getAttribute("mtheaterName") %></span>점
 			<br>
 			<label>상영관</label>
-			<span><%=session.getAttribute("theaterNo") %></span>관
+			<span><%=session.getAttribute("theaterName") %></span>관
 			<br>
 			<label>상영일자</label>
 			<span>

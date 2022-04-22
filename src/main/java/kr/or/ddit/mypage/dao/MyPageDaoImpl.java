@@ -112,5 +112,10 @@ public class MyPageDaoImpl implements IMyPageDao{
 	public int deleteQna(SqlMapClient client, String qna_no) throws SQLException {
 		return client.delete("mypage.deleteQna",qna_no);
 	}
+
+	@Override
+	public List<Map<String, Object>> payList(SqlMapClient client, String customer_no) throws SQLException {
+		return client.queryForList("mypage.payList", customer_no);
+	}
 	
 }

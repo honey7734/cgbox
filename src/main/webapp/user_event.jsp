@@ -253,46 +253,17 @@ $(function(){
 									<li>
 										<span class="opener">문의사항</span>
 										<ul>
-											<li><a href="user_QnA.jsp">Q&A</a></li>
+											<li><a href="myPage/myPage.jsp">Q&A</a></li>
 											<li><a href="user_FAQ.jsp">FAQ</a></li>
 											<li><a href="user_notice.jsp">공지사항</a></li>
 										</ul>
 									</li>
 									<li><a href="user_event.jsp">이벤트</a></li>
-									<li>
-										<span class="opener">상품</span>
-										<ul>
-											<li><a href="user_prod.jsp">팝콘/스낵/음료</a></li>
-											<li><a href="user_gifticon.jsp">기프티콘</a></li>
-										</ul>
-									</li>
+									<li><a href="store/storePage.jsp">스토어</a></li>
 								</ul>
 							</nav>
 
-						<!-- Section -->
-							<section>
-								<header class="major">
-									<h2>Ante interdum</h2>
-								</header>
-								<div class="mini-posts">
-									<article>
-										<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-										<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-									</article>
-									<article>
-										<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-										<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-									</article>
-									<article>
-										<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-										<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-									</article>
-								</div>
-								<ul class="actions">
-									<li><a href="#" class="button">More</a></li>
-								</ul>
-							</section>
-
+						
 						<!-- Section -->
 							<section>
 								<header class="major">

@@ -1,6 +1,7 @@
 package seat.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
@@ -27,6 +28,10 @@ public class SeatDaoImpl implements ISeatDao {
 	@Override
 	public SeatVO selectSeatByNo(int sno) throws SQLException {
 		return (SeatVO) client.queryForObject("seat.selectSeatByNo", sno);
+	}
+	@Override
+	public List<SeatVO> selectAllBytno(int tno) throws SQLException {
+		return client.queryForList("seat.selectAllBytno", tno);
 	}
 
 }

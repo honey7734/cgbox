@@ -9,10 +9,17 @@ public class MemberVO {
 	private String member_pass ;
 	private String member_birth;
 	private String member_tel  ;
+	private int grade_no;
 	
 	
 	
 	
+	public int getGrade_no() {
+		return grade_no;
+	}
+	public void setGrade_no(int grade_no) {
+		this.grade_no = grade_no;
+	}
 	public int getMember_point() {
 		return member_point;
 	}

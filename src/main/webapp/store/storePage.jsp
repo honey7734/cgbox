@@ -1,4 +1,4 @@
-<%@page import="vo.MemberVO"%>
+<%@page import="cgbox.vo.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,14 +16,13 @@
 
 
 <script>
-	customer_no =0;
-	customer_no1 = '';
+customer_no = 0;
 <% 
 
-MemberVO vo = (MemberVO)session.getAttribute("loginMember");
+MemberVO vo = (MemberVO)session.getAttribute("loginmember");
 if(vo != null){
 %>
-customer_no1 = <%=vo.getCustomer_no() %>;
+customer_no = <%=vo.getCustomer_no() %>;
 <%
 }
 %>
@@ -34,7 +33,6 @@ customer_no1 = <%=vo.getCustomer_no() %>;
 	// 세션 
 	
 	$(function(){
-		
 		// 스토어 전체항목 소개문구
 		storestr = "<h3>CGVBOX STORE</h3>";
 		if(customer_no != 0){
@@ -74,7 +72,7 @@ customer_no1 = <%=vo.getCustomer_no() %>;
 		$('.cartMove').on('click',function(){
 			if(customer_no == 0){
 				if(confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로이동하시겠습니까?")){
-					window.location.href= "../myPage/myPage.jsp";
+					window.location.href= "../ticketing/NonMember_reservations.jsp";
 				} else{
 				}
 			}else{
@@ -87,7 +85,7 @@ customer_no1 = <%=vo.getCustomer_no() %>;
 		$(document).on('click',".cart",function(){
 			if(customer_no == 0){
 				if(confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로이동하시겠습니까?")){
-					window.location.href= "../myPage/myPage.jsp";
+					window.location.href= "../ticketing/NonMember_reservations.jsp";
 				} else{
 				}
 			}else{
@@ -99,7 +97,7 @@ customer_no1 = <%=vo.getCustomer_no() %>;
 		$(document).on('click',".buy",function(){
 			if(customer_no == 0){
 				if(confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로이동하시겠습니까?")){
-					window.location.href= "../myPage/myPage.jsp";
+					window.location.href= "../ticketing/NonMember_reservations.jsp";
 				} else{
 				}
 			}else{
@@ -243,11 +241,55 @@ customer_no1 = <%=vo.getCustomer_no() %>;
   .cartclick{
   	border-left: 1px solid lightgray;
   }
+   .container{ 
+	margin-top: 50px; 
+  } 
+  nav{
+	background: rgb(220,53,69);
+	background: linear-gradient(90deg, rgba(220,53,69,1) 0%, rgba(220,53,69,1) 29%, rgba(255,66,0,1) 100%);
+}
 </style>
 </head>
 <body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top" >
+  <!-- Brand -->
+  <a class="navbar-brand" href="../main/fix.jsp">CGBOX</a>
 
+  <!-- Links -->
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="#">영화</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">극장</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="../ticketing/reservation.jsp">예매</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="storePage.jsp">스토어</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="../user_event.jsp">이벤트</a>
+    </li>
+  </ul>
+  
+  <ul class="navbar-nav" style="margin-left:1300px;" >
+    <li class="nav-item">
+      <a class="nav-link" href="../ticketing/NonMember_reservations.jsp" style="float:right;">로그인</a>
+      </li>
+      <li class="nav-item">
+      <a class="nav-link" href="../myPage/myPage.jsp" style="float:right;">MyPage</a>
+      </li>
+      <li class="nav-item">
+      <a class="nav-link" href="../user_FAQ.jsp" style="float:right;">고객센터</a>
+      </li>
+      </ul>
+</nav>
+  
+  
 <div class="container" >
+
  <div class="leftMenu">
   <ul class="nav menuLine" role="tablist">
     <li class="nav-item">

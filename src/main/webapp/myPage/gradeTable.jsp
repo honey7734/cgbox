@@ -46,15 +46,23 @@
 		</thead>                  
 		<tbody>            
 			<tr>             
-				<td>VIP</td>		       
-				<td>5000 포인트</td>		       
+				<td>브론즈</td>		       
+				<td>0 포인트</td>		       
 			</tr>            
 			<tr>             
-				<td>VVIP</td>		       
+				<td>실버</td>		       
+				<td>2000 포인트</td>		       
+			</tr>
+			<tr>             
+				<td>골드</td>		       
+				<td>4000 포인트</td>		       
+			</tr>
+			<tr>             
+				<td>플레티넘</td>		       
 				<td>7000 포인트</td>		       
 			</tr>
 			<tr>             
-				<td>GOD</td>		       
+				<td>다이아몬드</td>		       
 				<td>10000 포인트</td>		       
 			</tr>
 			<tr>             

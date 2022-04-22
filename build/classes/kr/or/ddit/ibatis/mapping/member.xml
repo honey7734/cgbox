@@ -68,8 +68,8 @@
 	
 	<!-- 저장하기 -->
 	<insert id="insertMember1" parameterClass="memberVO">
-		insert into member(customer_no,member_id, member_pass, member_name, member_birth, member_tel, member_mail, member_point) 
-		values(cus_no_seq.currval,#member_id#, #member_pass#, #member_name#, #member_birth#, #member_tel#, #member_mail#, #member_point#)
+		insert into member(customer_no,member_id, member_pass, member_name, member_birth, member_tel, member_mail, member_point, grade_no) 
+		values(cus_no_seq.currval,#member_id#, #member_pass#, #member_name#, #member_birth#, #member_tel#, #member_mail#, #member_point#, 1)
 	
 		<selectKey keyProperty="member_id" resultClass="string">
 			select member_id from member where member_id = #member_id#

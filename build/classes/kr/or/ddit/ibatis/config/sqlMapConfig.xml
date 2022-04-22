@@ -34,6 +34,7 @@
 	 <typeAlias alias="noticeVO" type="cgbox.vo.NoticeVO"/>
 	 <typeAlias alias="FAQVO" type="cgbox.vo.FAQVO"/>
  	 <typeAlias alias="memberVO" type="cgbox.vo.MemberVO"/>
+ 	 <typeAlias alias="MQnAVO" type="cgbox.vo.QnAVO"/>
 
 
 	<!-- 현수오빠 중복alias-->
@@ -75,6 +76,7 @@
 	  <sqlMap resource="kr/or/ddit/ibatis/mapping/event.xml"/>
 	  <sqlMap resource="kr/or/ddit/ibatis/mapping/notice.xml"/>
 	  <sqlMap resource="kr/or/ddit/ibatis/mapping/FAQ.xml"/>
+	  <sqlMap resource="kr/or/ddit/ibatis/mapping/QnA.xml"/>
 	  
 	  <!-- 현수 -->
 	 <!--   <sqlMap resource="kr/or/ddit/ibatis/mapping/memberTest.xml"/> -->

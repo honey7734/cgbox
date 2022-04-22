@@ -3,6 +3,7 @@
 
 <%
    String id = (String)request.getAttribute("gogogo");
+	
    if(id == null){
       // 사용가능
 %>   

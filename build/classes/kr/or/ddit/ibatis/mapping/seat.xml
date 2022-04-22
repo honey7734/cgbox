@@ -10,4 +10,8 @@
 	<select id="selectSeatByNo" parameterClass="int" resultClass="seatVO">
 		select seat_row, seat_col from seat where SEAT_NO = #no#
 	</select>
+	
+	<select id="selectAllBytno" parameterClass="int" resultClass="seatVO">
+		select * from seat where THEATER_NO = #no#
+	</select>	
 </sqlMap>

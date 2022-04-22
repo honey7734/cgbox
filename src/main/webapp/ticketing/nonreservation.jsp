@@ -13,6 +13,9 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/jquery.serializejson.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 
 <style type="text/css">
 
@@ -57,6 +60,8 @@ h1{
 
  	background-color:#e74c3c;
  	color: white;
+ 	font-family: 'Black Han Sans', sans-serif;
+	font-family: 'Nanum Gothic Coding', monospace;
 
  
 }
@@ -120,7 +125,7 @@ $(function() {
 <%
 	Map<String, String> result = (Map<String, String>) session.getAttribute("result");
 	
-	if(result.size() == 0 || result == null){
+	if(result == null){
 	%>
 	
 
@@ -145,7 +150,7 @@ $(function() {
 		
   <div class="card " style="width:500px">
   	<div class="tittle"><%=result.get("mname") %></div>
-    <img class="card-img-top" src="../image/영화포스터샘플2.jpg" alt="영화포스터" style="width:96%;object-fit: cover;">
+    <img class="card-img-top" src="<%=result.get("mImg") %>" alt="영화포스터" style="width:96%;object-fit: cover;">
     <div class="card-body">
       <h4 class="card-title">CGBOX <%=result.get("mtName") %>점</h4>
       <p class="card-text"><%=result.get("tKind") %></p>

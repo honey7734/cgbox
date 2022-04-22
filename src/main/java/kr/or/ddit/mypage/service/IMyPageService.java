@@ -46,4 +46,6 @@ public interface IMyPageService {
 	public List<QnaVO> getQna(String customer_no);
 	
 	public int deleteQna(String qna_no);
+	
+	public List<Map<String, Object>> payList(String customer_no);
 }

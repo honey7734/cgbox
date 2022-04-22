@@ -4,11 +4,9 @@
 <%
 	// 서블릿에서 공유데이터
 	String res = (String)request.getAttribute("gogogo");
-// int num = (int)request.getAttribute("num") ;
-// 	String input = (String)request.getAttribute("dododo");
-//	if(res.equals(input))
-	
-	if(res != null){
+	String ch = (String)request.getAttribute("ch");	
+
+	if(res != null || ch !="실패"){
 %>
 	{
 		"flag" : "회원가입 성공!!"

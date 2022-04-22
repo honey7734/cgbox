@@ -30,6 +30,7 @@ public class MovieDaoImpl implements IMovieDao {
 		return (String) client.queryForObject("movie.selectNameByNo", mno);
 	}
 	
+	// 강현수
 	@Override
 	public int insertMovie(MovieVO vo) {
 		int check = 0;
@@ -57,16 +58,36 @@ public class MovieDaoImpl implements IMovieDao {
 
 
 	@Override
-	public String selectImg(String movieName) {
-		String img = null;
+	public List<MovieVO> selectImg() {
+		List<MovieVO> list = null; 
 		try {
-			img = (String) client.queryForObject("movie.selectImg", movieName);
+			list =  client.queryForList("movie.selectImg");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return img;
+		return list;
+	}
+	
+	@Override
+	public MovieVO DetailMovie(String movieImg) {
+		MovieVO vo = null;
+		
+		try {
+			vo = (MovieVO) client.queryForList("movie.DetailMovie", movieImg);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return vo;
+	}
+	//
+	
+	@Override
+	public MovieVO selectAllMovieByNo(String mvo) throws SQLException {
+		return (MovieVO) client.queryForObject("movie.selectAllMovieByNo", mvo);
 	}
 
 }

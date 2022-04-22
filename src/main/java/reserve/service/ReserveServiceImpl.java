@@ -41,5 +41,18 @@ public class ReserveServiceImpl implements IReserveService {
 		
 		return list;
 	}
+	@Override
+	public List<ReserveVO> selectAllByscno(int scno) {
+		List<ReserveVO> list = null;
+		
+		try {
+			list = dao.selectAllByscno(scno);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+		
+	}
 
 }

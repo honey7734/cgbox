@@ -17,8 +17,8 @@
 		#movie_grade#, #movie_running#, #movie_audience#, #movie_trailer#, #movie_link#, #movie_img#)
 	</insert>
 	
-	<select id="selectImg" parameterClass="string" resultClass="string">
-		select movie_img from movie where movie_name = #data#
+	<select id="selectImg" resultClass="MovieVO">
+		select * from movie
 	</select>
 	
 	<select id="selectMovieName" resultClass="string">
@@ -28,5 +28,9 @@
 	<!-- 영화 상세보기 용 -->
 	<select id="DetailMovie" parameterClass="string" resultClass="MovieVO">
 		select * from movie where movie_img = #data#
+	</select>
+	
+	<select id="selectAllMovieByNo" parameterClass="String" resultClass="MovieVO">
+		select * from movie where movie_no = #mid#
 	</select>
 </sqlMap>

@@ -46,4 +46,6 @@ public interface IMyPageDao {
 	
 	public int deleteQna(SqlMapClient client, String qna_no) throws SQLException;
 	
+	public List<Map<String, Object>> payList(SqlMapClient client, String customer_no) throws SQLException;
+	
 }

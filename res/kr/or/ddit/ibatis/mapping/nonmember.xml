@@ -32,5 +32,9 @@
 		  and nonmember_pass = #nonmember_pass#
 	</select>
 	
+	<select id="selectNonPass" parameterClass="nonMemberVO" resultClass="string">
+		select nonmember_pass from nonmember where nonmember_birth = #nonmember_birth# and nonmember_mail = #nonmember_mail#
+	</select>
+	
 	
 </sqlMap>

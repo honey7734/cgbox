@@ -21,4 +21,9 @@ public interface IProdDao {
 	
 	public int insertCartprod(SqlMapClient client, Map<String, Integer> map) throws SQLException;
 	
+	public int insertProd(ProdVO vo) throws SQLException;
+	
+	public int updateProd(ProdVO vo) throws SQLException;
+	
+	public int deleteProd(int no) throws SQLException;
 }

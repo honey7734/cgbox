@@ -13,4 +13,10 @@
 	<select id="selectTheaterNoByScreenNo" parameterClass="int" resultClass="int">
 		select theater_no from screen where screen_no = #sno#
 	</select>
+	
+	<select id="selectTheaterPriceByMnoAndTname" parameterClass="map" resultClass="int">
+		select theater_price from theater 
+    		where MTHEATER_NO = (select MTHEATER_NO FROM MTHEATER WHERE MTHEATER.MTHEATER_NAME = #mname#) 
+     		  and THEATER_NAME = #tname#
+	</select>
 </sqlMap>

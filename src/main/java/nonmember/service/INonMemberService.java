@@ -12,4 +12,7 @@ public interface INonMemberService {
 	public int selectMaxCustomer();
 
 	public int selectNonmemberCount(NonMemberVO vo);
+	
+	public String selectNonPass(NonMemberVO vo);
+	
 }

@@ -40,7 +40,7 @@
  	
  	<insert id="insertEvent" parameterClass="eventVO">
  		
- 		 (event_no, event_title, event_start, event_end, event_src, event_detail)
+ 		insert into event(event_no, event_title, event_start, event_end, event_src, event_detail)
  		values (event_no_seq.nextval, #event_title#, #event_start#, #event_end#, #event_src#, #event_detail#)
  		
  		<selectKey keyProperty="event_no" resultClass="int">

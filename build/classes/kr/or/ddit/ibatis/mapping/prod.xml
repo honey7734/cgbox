@@ -27,6 +27,29 @@
 		insert into cart_prod(cart_no, prod_no, customer_no, cart_count,cart_status) 
 			values((select cart_no from cart where customer_no= #customer_no#), #prod_no#, #customer_no#, 1, 'N')
 	</insert>
+	
+	<insert id="insertProd" parameterClass="prodVO">
+		insert into prod (prod_no, prod_name, prod_category, prod_price, prod_detail, prod_source)
+		values (prod_seq.nextval, #prod_name#, #prod_category#, 
+		    #prod_price#, #prod_detail#, #prod_source#)
+		    
+		<selectKey keyProperty="prod_no" resultClass="int">
+			select prod_seq.currval from dual
+		</selectKey>    
+		
+	</insert>
+	
+	<update id="updateProd" parameterClass="prodVO">
+ 		update prod set prod_no=#prod_no#, prod_name=#prod_name#, prod_category=#prod_category#, 
+ 						prod_price=#prod_price#, prod_detail=#prod_detail#, prod_source = #prod_source#
+ 		 where prod_no=#prod_no#
+ 	</update>
+ 	
+ 	<delete id="deleteProd" parameterClass="int">
+ 		delete from prod where prod_no=#prod_no#
+ 	</delete>	
+ 	
+ 	
 </sqlMap>
 
 

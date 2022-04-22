@@ -19,6 +19,7 @@ import cgbox.vo.SeatVO;
 import cgbox.vo.TheaterVO;
 import movie.service.IMovieService;
 import movie.service.MovieServiceImpl;
+import movie.vo.MovieVO;
 import mtheater.service.IMTheaterService;
 import mtheater.service.MTheaterServiceImpl;
 import reserve.service.IReserveService;
@@ -116,6 +117,9 @@ public class NonmemberReservationCheck extends HttpServlet {
 		String movieNo = String.valueOf(scvo.getMovie_no());
 		IMovieService service5 = MovieServiceImpl.getInstance();
 		
+		MovieVO mvo = service5.selectAllMovieByNo(movieNo);
+		
+		
 		//출력용 영화이름
 		String resultMovieName = service5.selectNameByNo(movieNo);
 		
@@ -175,6 +179,9 @@ public class NonmemberReservationCheck extends HttpServlet {
 		//가격 price
 		int price = thvo.getTheater_price() * seats.size();
 		result.put("price", String.valueOf(price));
+		
+		//영화 이미지
+		result.put("mImg", mvo.getMovie_img());
 		
 		
 		HttpSession session = request.getSession();

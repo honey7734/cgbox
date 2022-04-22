@@ -9,4 +9,5 @@ import cgbox.vo.ReserveVO;
 public interface IReserveService {
 	public void insertNew(ReserveVO vo);
 	public List<ReserveVO> selectReserveByTicket(int tno);
+	public List<ReserveVO> selectAllByscno(int scno);
 }

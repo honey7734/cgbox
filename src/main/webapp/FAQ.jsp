@@ -20,11 +20,17 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
+  
+
+  
 <style>
 #pagelist{
  margin-left : 40%;
  height : 50px;
 }
+
+
 </style>
 <script>
 currentPage = 1; //초기값
@@ -140,6 +146,8 @@ $(function(){
 </head>
 <body class="is-preload">
 
+
+
 	<!-- Wrapper -->
 		<div id="wrapper">
 
@@ -215,40 +223,12 @@ $(function(){
 										</ul>
 									</li>
 									<li><a href="event.jsp">이벤트관리</a></li>
-									<li>
-										<span class="opener">상품관리</span>
-										<ul>
-											<li><a href="prod.jsp">팝콘/스낵/음료</a></li>
-											<li><a href="gifticon.jsp">기프티콘</a></li>
-										</ul>
-									</li>
+									<li><a href="store/manager_storePage.jsp">상품관리</a></li>
+									
 								</ul>
 							</nav>
 
-						<!-- Section -->
-							<section>
-								<header class="major">
-									<h2>Ante interdum</h2>
-								</header>
-								<div class="mini-posts">
-									<article>
-										<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-										<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-									</article>
-									<article>
-										<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-										<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-									</article>
-									<article>
-										<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-										<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-									</article>
-								</div>
-								<ul class="actions">
-									<li><a href="#" class="button">More</a></li>
-								</ul>
-							</section>
-
+						
 						<!-- Section -->
 							<section>
 								<header class="major">
@@ -359,6 +339,5 @@ $(function(){
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
-	
 </body>
 </html>

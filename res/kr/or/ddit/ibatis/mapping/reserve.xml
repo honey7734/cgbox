@@ -8,4 +8,8 @@
 	<select id="selectReserveByTicket" parameterClass="int" resultClass="reserveVO">
 		select * from reserve where TICKET_NO = #no#
 	</select>
+	
+	<select id="selectAllByscno" parameterClass="int" resultClass="reserveVO">
+		select * from reserve where screen_no = #sno#
+	</select>
 </sqlMap>

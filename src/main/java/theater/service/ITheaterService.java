@@ -1,6 +1,7 @@
 package theater.service;
 
 import java.util.List;
+import java.util.Map;
 
 import cgbox.vo.TheaterVO;
 
@@ -13,4 +14,6 @@ public interface ITheaterService {
 	public TheaterVO selectAllByTheaterNo(int tno);
 
 	public int selectTheaterNoByScreenNo(int sno);
+	
+	public int selectTheaterPriceByMnoAndTname(Map<String, String> map);
 }

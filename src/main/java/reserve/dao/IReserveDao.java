@@ -13,4 +13,5 @@ public interface IReserveDao {
 	
 	public List<ReserveVO> selectReserveByTicket(int no) throws SQLException; 
 	
+	public List<ReserveVO> selectAllByscno(int scno) throws SQLException;
 }

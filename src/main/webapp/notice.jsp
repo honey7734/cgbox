@@ -214,39 +214,12 @@ $(function(){
 										</ul>
 									</li>
 									<li><a href="event.jsp">이벤트관리</a></li>
-									<li>
-										<span class="opener">상품관리</span>
-										<ul>
-											<li><a href="prod.jsp">팝콘/스낵/음료</a></li>
-											<li><a href="gifticon.jsp">기프티콘</a></li>
-										</ul>
-									</li>
+									<li><a href="store/manager_storePage.jsp">상품관리</a></li>
+									
 								</ul>
 							</nav>
 
-						<!-- Section -->
-							<section>
-								<header class="major">
-									<h2>Ante interdum</h2>
-								</header>
-								<div class="mini-posts">
-									<article>
-										<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-										<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-									</article>
-									<article>
-										<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-										<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-									</article>
-									<article>
-										<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-										<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-									</article>
-								</div>
-								<ul class="actions">
-									<li><a href="#" class="button">More</a></li>
-								</ul>
-							</section>
+						
 
 						<!-- Section -->
 							<section>

@@ -46,6 +46,7 @@ public class MovieServiceImpl implements IMovieService {
 		return result;
 	}
 	
+	// 강현수
 	@Override
 	public int insertMovie(MovieVO vo) {
 		// TODO Auto-generated method stub
@@ -58,15 +59,30 @@ public class MovieServiceImpl implements IMovieService {
 		return dao.selectMovieName();
 	}
 
-//	@Override
-//	public MovieVO selectImg(String movieName) {
-//		// TODO Auto-generated method stub
-//		return dao.selectImg(movieName);
-//	}
 
 	@Override
-	public String selectImg(String movieName) {
+	public List<MovieVO> selectImg() {
 		// TODO Auto-generated method stub
-		return dao.selectImg(movieName);
+		return dao.selectImg();
+	}
+	
+	@Override
+	public MovieVO DetailMovie(String movieImg) {
+		// TODO Auto-generated method stub
+		return dao.DetailMovie(movieImg);
+	}
+	//
+	
+	@Override
+	public MovieVO selectAllMovieByNo(String mvo) {
+		MovieVO vo = null;
+		
+		try {
+			vo = dao.selectAllMovieByNo(mvo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return vo;
 	}
 }

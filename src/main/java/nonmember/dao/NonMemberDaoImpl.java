@@ -41,4 +41,9 @@ public class NonMemberDaoImpl implements INonMemberDao {
 		return (int) client.queryForObject("nonmember.selectNonmemberCount", vo);
 	}
 
+	@Override
+	public String selectNonPass(NonMemberVO vo) throws SQLException {
+		return (String) client.queryForObject("nonmember.selectNonPass", vo);
+	}
+
 }

@@ -66,4 +66,15 @@ public class NonMemberServiceImpl implements INonMemberService {
 		return result;
 	}
 
+	@Override
+	public String selectNonPass(NonMemberVO vo) {
+		String result = null;
+		try {
+			result = dao.selectNonPass(vo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }

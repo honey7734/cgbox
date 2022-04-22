@@ -15,7 +15,6 @@ import com.google.gson.Gson;
 
 import movie.service.IMovieService;
 import movie.service.MovieServiceImpl;
-/*import vo.MovieVO;*/
 import movie.vo.MovieVO;
 
 /**

@@ -90,4 +90,40 @@ public class ProdServiceImpl implements IProdService {
 		
 		return result;
 	}
+
+	@Override
+	public int insertProd(ProdVO vo) {
+		int res=0;
+		try {
+			res = dao.insertProd(vo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+	@Override
+	public int updateProd(ProdVO vo) {
+		int res = 0;
+		try {
+			res = dao.updateProd(vo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+	@Override
+	public int deleteProd(int no) {
+		int res = 0;
+		try {
+			res = dao.deleteProd(no);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return res;
+	}
 }

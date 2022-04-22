@@ -1,6 +1,7 @@
 package seat.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import cgbox.vo.SeatVO;
 import seat.dao.ISeatDao;
@@ -43,6 +44,18 @@ public class SeatServiceImpl implements ISeatService {
 		}
 		
 		return vo;
+	}
+	@Override
+	public List<SeatVO> selectAllBytno(int tno) {
+		List<SeatVO> list = null;
+		
+		try {
+			list = dao.selectAllBytno(tno);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 
 }

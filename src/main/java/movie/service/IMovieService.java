@@ -16,9 +16,14 @@ public interface IMovieService {
 	
 	public int insertMovie(MovieVO vo);
 	
-	public String selectImg(String movieName);
-	
-//	public MovieVO selectImg(String movieName);
+	// 강현수
+	public List<MovieVO> selectImg();
 	
 	public List<String> selectMovieName();
+	
+	public MovieVO DetailMovie(String movieImg);
+	//
+	
+	public MovieVO selectAllMovieByNo(String mvo);
+
 }

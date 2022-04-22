@@ -20,4 +20,12 @@ public interface IProdService {
 	public int insertCart(int cid);
 	
 	public int insertCartprod(Map<String, Integer> map);
+	
+	public int insertProd(ProdVO vo);
+	
+	//수정
+	public int updateProd(ProdVO vo);
+	
+	//삭제
+	public int deleteProd(int no);
 }

@@ -2,6 +2,7 @@ package theater.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import cgbox.vo.TheaterVO;
 import theater.dao.ITheaterDao;
@@ -52,6 +53,17 @@ public class TheaterServiceImpl implements ITheaterService{
 		int result = 0;
 		try {
 			result = dao.selectTheaterNoByScreenNo(sno);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public int selectTheaterPriceByMnoAndTname(Map<String, String> map) {
+		int result = 0;
+		try {
+			result = dao.selectTheaterPriceByMnoAndTname(map);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

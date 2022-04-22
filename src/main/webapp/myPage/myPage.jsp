@@ -17,13 +17,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../js/myPage.js"></script>
 <script>
-	customer_no = 1;
+	customer_no = 0;
 <% 
 
-MemberVO vo = (MemberVO)session.getAttribute("loginMember");
+MemberVO vo = (MemberVO)session.getAttribute("loginmember");
 if(vo != null){
 %>
-customer_no1 = <%=vo.getCustomer_no() %>;
+customer_no = <%=vo.getCustomer_no() %>;
 <%
 }
 %>
@@ -99,6 +99,7 @@ customer_no1 = <%=vo.getCustomer_no() %>;
 
 			$('#moModal #id').prop('disabled', true);
 			$('#moModal #point').prop('disabled', true);
+			$('#moModal #birth').prop('disabled', true);
 			$('#moModal #grade').prop('disabled', true);
 		})
 
@@ -156,6 +157,10 @@ customer_no1 = <%=vo.getCustomer_no() %>;
 		})
 		
 		$('.reserve').on('click',function(){
+			$('#relist').css('color','');
+			$('#haveProduct').css('color','');
+			$('#paylist').css('color','');
+			$('#relist').css('color','red');
 			reserveList();
 		})
 		
@@ -163,10 +168,18 @@ customer_no1 = <%=vo.getCustomer_no() %>;
 			$(this).parents('.ubody').find($('.active')).removeClass("active");
 			$('#buylist').addClass("active");
 			
+			$('#relist').css('color','');
+			$('#haveProduct').css('color','');
+			$('#paylist').css('color','');
+			$(this).css('color','red');
+			
 			
 		})
 		
 		$('#meminfo').on('click',function(){
+			$('#relist').css('color','');
+			$('#haveProduct').css('color','');
+			$('#paylist').css('color','');
 			memberOutput();
 		})
 		
@@ -179,6 +192,9 @@ customer_no1 = <%=vo.getCustomer_no() %>;
 		})
 		
 		$('#memreview').on('click',function(){
+			$('#relist').css('color','');
+			$('#haveProduct').css('color','');
+			$('#paylist').css('color','');
 			reviewList();
 		})
 		
@@ -239,6 +255,9 @@ customer_no1 = <%=vo.getCustomer_no() %>;
 		
 		
 		$('#qnalist').on('click',function(){
+			$('#relist').css('color','');
+			$('#haveProduct').css('color','');
+			$('#paylist').css('color','');
 			getQna();
 		})
 		
@@ -251,12 +270,18 @@ customer_no1 = <%=vo.getCustomer_no() %>;
 			$('#ansinfo').html(a);
 			$('#queinfo').html(q);
 		})
+		
+		
+		$('#paylist').on('click', function(){
+			payList();
+		})
 	});
 </script>
 <style type="text/css">
 body{
  		min-width: 1950px; 
 	}
+	
 
 .myPage {
 	margin: 20px auto;
@@ -264,6 +289,7 @@ body{
 }
 
 .mainMyPage {
+	margin-top:80px;
 	background-color: #f6f7f6;
 }
 
@@ -337,19 +363,7 @@ hr {
 	margin-left: 20px; 
 }
 
-.rehistory{
-	margin-left: 20px;
-}
-
-.havePro{
-	margin-left: 20px;
-}
-
-.reviewList{
-	margin-left: 20px;
-}
-
-.qnaList{
+.rehistory, .havePro, .reviewList, .qnaList, .paylist{
 	margin-left: 20px;
 }
 
@@ -361,9 +375,12 @@ hr {
 	width: 90px;
 }
 .rh3{
-	width: 290px;
+	width: 350px;
 }
 
+.pl1{
+	width: 325px;
+}
 
 .re1{
 	width: 280px;
@@ -410,7 +427,35 @@ hr {
 
 .title:hover {
 	color: white;
-	background-color: red;
+}
+
+.title{
+  position: relative;
+}
+
+.title::before{
+  content: "";
+position: absolute;
+top: 0;
+left: 0;
+display: block;
+width: 100%;
+height: 100%;
+z-index: -1;
+background-color: red;
+-webkit-transform: scaleY(.3);
+transform: scaleY(.3);
+opacity: 0;
+transition: all .3s
+}
+
+.title:hover::before{
+  opacity: 1;
+  background-color: red;
+  -webkit-transform: scaleY(1);
+  transform: scaleY(1);
+  transition: -webkit-transform .6s cubic-bezier(.08, .35, .13, 1.02), opacity .4s;
+  transition: transform .6s cubic-bezier(.08, .35, .13, 1.02), opacity
 }
 
 .sub:hover {
@@ -424,15 +469,54 @@ hr {
 .myPage{
 	font-family: 'Do Hyeon', sans-serif;
 }
+
+nav{
+	background: rgb(220,53,69);
+	background: linear-gradient(90deg, rgba(220,53,69,1) 0%, rgba(220,53,69,1) 29%, rgba(255,66,0,1) 100%);
+}
 </style>
 </head>
 <body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top" >
+  <!-- Brand -->
+  <a class="navbar-brand" href="#">CGBOX</a>
 
+  <!-- Links -->
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="#">영화</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">극장</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">예매</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">스토어</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">이벤트</a>
+    </li>
+
+  </ul>
+  <ul class="navbar-nav" style="margin-left:1300px;" >
+    <li class="nav-item">
+      <a class="nav-link" href="#" style="float:right;">로그인</a>
+      </li>
+      <li class="nav-item">
+      <a class="nav-link" href="#" style="float:right;">MyPage</a>
+      </li>
+      <li class="nav-item">
+      <a class="nav-link" href="#" style="float:right;">고객센터</a>
+      </li>
+      </ul>
+</nav>
 	<div class="myPage">
 		<div class="mainMyPage">
 			<div class="top">
 				<div class="nameId"></div>
-				<div><h4>고객님은 <span class="grade1" style='color:red; text-decoration:underline'></span> 입니다.</h4></div>
+				<div><h3>고객님은 <span class="grade1" style='color:red; text-decoration:underline'></span> 입니다.</h3></div>
 			</div>
 			<div class="bottom">
 				<div class="mPoint">
@@ -470,10 +554,10 @@ hr {
 					<strong id="buylist" class="nav-link title reserve" data-toggle="pill" style='font-size: 1.5em;'><img alt='회원정보' src='../images/receipt_long_FILL0_wght400_GRAD0_opsz48.png'> 구매내역</strong>
 					<ul class="nav flex-column sublist" style="font-size: 1.0em;">
 						<li class="nav-item">
-							<p class="nav-link sub reserve">● 예매내역</p>
+							<p id="relist" class="nav-link sub reserve">● 예매내역</p>
 						</li>
 						<li class="nav-item">
-							<p class="nav-link sub">● 결제내역</p>
+							<p id="paylist" class="nav-link sub">● 결제내역</p>
 						</li>
 						<li class="nav-item">
 							<p id="haveProduct" class="nav-link sub">● 보유상품</p>

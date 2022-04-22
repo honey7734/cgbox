@@ -14,7 +14,7 @@
 				
 				success : function(res){
 					str = "<strong style='font-size:2.5em;'>" + res.member_name + "님</strong>";
-					str += "<span style='font-size:2.0em;'> " + res.member_id + "</span>";
+					str += "<span style='font-size:1.7em;'> " + res.member_id + "</span>";
 					
 					$('.nameId').html(str);
 					findGrade(res.grade_no);
@@ -336,15 +336,14 @@ var reserveList = function(){
 			str += "<table class='table table-hover' style='text-align:center;'>"
 			str += " <thead>                     "
 			str += " <tr>                     "
-			str += " <th colspan='10' style='background-color:lightgray;'><h3>예매내역</h3> </th>                    "
+			str += " <th colspan='9' style='background-color:lightgray;'><h3>예매내역</h3> </th>                    "
 			str += " </tr>                     "
 			str += "      <tr>                   "
 			str += "        <th class ='rh1'>티켓번호</th>      "
 			str += "        <th class ='rh2'>영화관</th>      "
 			str += "        <th class ='rh3'>영화이름</th>    "
 			str += "        <th class ='rh2'>상영관</th>      "
-			str += "        <th class ='rh1'>좌석 행</th>     "
-			str += "        <th class ='rh1'>좌석 열</th>     "
+			str += "        <th class ='rh1'>좌석번호</th>     "
 			str += "        <th class ='rh1'>시작시간</th>    "
 			str += "        <th class ='rh1'>종료시간</th>    "
 			str += "        <th class ='rh1'>금액</th>        "
@@ -358,9 +357,8 @@ var reserveList = function(){
 				   str += "     <td>" + v.TICKET_NO + "</td>     "
 				   str += "     <td>" + v.MTHEATER_NAME + "</td>     "
 				   str += "     <td style = 'word-break: break-all'>" + v.MOVIE_NAME + "</td>     "
-				   str += "     <td>" + v.THEATER_NAME + "</td>     "
-				   str += "     <td>" + v.SEAT_ROW + "</td>     "
-				   str += "     <td>" + v.SEAT_COL + "</td>     "
+				   str += "     <td>" + v.THEATER_NAME + "관</td>     "
+				   str += "     <td>" + v.SEAT_ROW + v.SEAT_COL+ "</td>     "
 				   str += "     <td>" + v.SCREEN_START + "</td>     "
 				   str += "     <td>" + v.SCREEN_END + "</td>     "
 				   str += "     <td>" + v.THEATER_PRICE + "원</td>     "
@@ -372,7 +370,7 @@ var reserveList = function(){
 		}else{
 			 str += " <tbody>            "
 			 str += "   <tr>             "
-			 str += "  <td colspan='10'>고객님의 예매내역이 존재하지 않습니다.</td>             "
+			 str += "  <td colspan='9'>고객님의 예매내역이 존재하지 않습니다.</td>             "
 			 str += "   </tr>            "
 			 str += " </tbody>           "
 		}					
@@ -628,4 +626,60 @@ var deleteQna = function(){
 	})
 	
 }
+
+
+var payList = function(){
+	$.ajax({
+		url : "/CGBOX/PayList.do",
+		type : "get",
+		data : {
+			"customer_no" : customer_no
+		},
+		success : function(res){
+			
+			str = "<div class='paylist'>";
+			str += "<table class='table table-hover' style='text-align:center;'>"
+			str += " <thead>                     "
+			str += " <tr>                     "
+			str += " <th colspan='4' style='background-color:lightgray;'><h3>결제내역</h3> </th>                    "
+			str += " </tr>                     "
+			str += "      <tr>                   "
+			str += "        <th class ='p11'>결제번호</th>      "
+			str += "        <th class ='pl1'>상품명</th>      "
+			str += "        <th class ='pl1'>결제금액</th>    "
+			str += "        <th class ='pl1'>결제일자</th>      "
+			str += "      </tr>                  "
+			str += "  </thead>                  "
+			if(res.length > 0){
+				$.each(res, function(i,v){
+				   str += " <tbody>            "
+				   str += "   <tr>             "
+				   str += "     <td>" + v.PAY_NO + "</td>     "
+				   str += "     <td>" + v.PROD_NAME + "</td>     "
+				   str += "     <td>" + v.PAY_AMOUNT + "</td>     "
+				   str += "     <td>" + v.PAY_DATE + "</td>     "
+				   str += "   </tr>            "
+				   str += " </tbody>           "
+		 
+				})	
+		}else{
+			 str += " <tbody>            "
+			 str += "   <tr>             "
+			 str += "  <td colspan='4'>고객님의 결제내역이 존재하지 않습니다.</td>             "
+			 str += "   </tr>            "
+			 str += " </tbody>           "
+		}					
+			str += "</table>";
+			str += "</div>";
+			$('.content').html(str);
+		},
+		error : function(xhr){
+			alert("상태 : " + xhr.status);
+		},
+		dataType : "json"
+		
+	})
+	
+}
+
 

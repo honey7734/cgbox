@@ -37,6 +37,7 @@
 			}else{
 				alert("등록 실패@@")
 			}
+			eventList();
 		},
 		error : function(xhr){
 			alert("상태 : " + xhr.status);

@@ -13,13 +13,16 @@ public interface IMovieDao {
 	
 	public String selectNameByNo(String mno) throws SQLException;
 	
-	//
-	
+	// 강현수
 	public int insertMovie(MovieVO vo);
 	
-	public String selectImg(String movieName);
-	
-//	public MovieVO selectImg(String movieName);
-	
+	public List<MovieVO> selectImg();
+		
 	public List<String> selectMovieName();
+	
+	public MovieVO DetailMovie(String movieImg);
+	//
+	
+	public MovieVO selectAllMovieByNo(String mvo) throws SQLException;
+	
 }

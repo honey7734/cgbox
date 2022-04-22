@@ -22,7 +22,7 @@ nav{
 }
 
 #cont div{
-	margin-top: 200px;
+	margin-top: 138px;
   	background-color: #333333;
 	text-align: center;
 	color: white;
@@ -275,7 +275,7 @@ $(function() {
 	if(session.getAttribute("loginmember") == null && session.getAttribute("nonMember") == null){
 		//로그인 페이지로 이동
 	%>
-		alert('로그인이 필요합니다 !');
+		alert('로그인이 필요한 서비스입니다');
 		location.href ='NonMember_reservations.jsp';
 	<%
 	}
@@ -323,7 +323,7 @@ $(function() {
 	
 	
 	//모든 요소 클릭시 nextbtn 활성화
-	movieNo ="";
+	movieNo ="";	//영화번호
 	moiveName = "";	//영화이름
 	mtheaterName = "";	//상영관 이름
 	resmonth = "";	// 예약일 달
@@ -410,11 +410,12 @@ $(function() {
 		$.ajax({
 			type:"get",
 			data : {
+				"movieNo"	   : movieNo,
 				"moiveName"    : moiveName,
 				"mtheaterName" : mtheaterName,
 				"resmonth"     : resmonth,
 				"resday"       : resday,
-				"theaterNo"    : theaterNo,
+				"theaterName"    : theaterNo,
 				"screenTime"   : screenTime,
 				"screenNo"	   : no,
 				"resweek" : resweek,
@@ -441,19 +442,39 @@ $(function() {
 		$(this).addClass('active')
 		
 		//영화 정보에 영화정보 출력
-		//1. 포스터 출력
-		$('#movieImg').attr('src', '../image/영화포스터샘플.png');
-		$('#movieImg').show();
 		
-		//2. 영화정보 출력
+		//1. 영화정보 출력
 		$('#movieSelect').hide();
 		$('#movieInfoDiv').show();
-		
 		
 		var nm =  $(this).text();
 		$('#movieName').text(nm);
 		moiveName = nm;
 		movieNo = $(this).attr('id');
+		
+		//2. 포스터 출력
+		
+		var mvid = $(this).attr('id');
+		
+		$.ajax({
+			url : '<%=request.getContextPath()%>/getMovieInfo.do',
+			type : 'get',
+			data:{
+				"mvid" : mvid
+			},
+			success : function(res) {
+				console.log(res)
+				$('#movieImg').attr('src', res.movie_img);
+				$('#movieImg').show();
+				
+			},
+			error : function() {
+				
+			},
+			dataType : 'json'
+		})
+		
+		
 		
 		//시청 연령, 영화관 종류(ex. 2D, 3D...)삽입
 		
@@ -524,6 +545,8 @@ $(function() {
 		$(this).addClass('active')
 		
 		theaterNo = $(this).parent().parent().find('.theater_num').attr('num');
+		
+		console.log('선택한 상영관번호 : ' + theaterNo);
 		screenTime = $(this).text();
 		$('#resTimeInfo').text($(this).text());
 		
@@ -547,27 +570,27 @@ $(function() {
 <!-- 네비게이션 바 -->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
   <!-- Brand -->
-  <a class="navbar-brand" href="#">CGBOX</a>
+  <a class="navbar-brand" href="../main/fix.jsp">CGBOX</a>
 
   <!-- Links -->
   <ul class="navbar-nav">
     <li class="nav-item">
       <a class="nav-link" href="#">영화</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">극장</a>
-    </li>
+<!--     <li class="nav-item"> -->
+<!--       <a class="nav-link" href="#">극장</a> -->
+<!--     </li> -->
     <li class="nav-item">
       <a class="nav-link" href="#" style="font-weight : bold; color: white">예매</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">스토어</a>
+      <a class="nav-link" href="../store/storePage.jsp">스토어</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">이벤트</a>
+      <a class="nav-link" href="../user_event.jsp">이벤트</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">헤택</a>
+      <a class="nav-link" href="../user_FAQ.jsp">고객센터</a>
     </li>
 
 
@@ -789,6 +812,5 @@ $(function() {
 			</div>
 		</div>
 	</div>
-<br><br>
 </body>
 </html>

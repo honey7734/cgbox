@@ -31,5 +31,9 @@ public class ReserveDaoImpl implements IReserveDao {
 	public List<ReserveVO> selectReserveByTicket(int no) throws SQLException {
 		return client.queryForList("reserve.selectReserveByTicket",no);
 	}
+	@Override
+	public List<ReserveVO> selectAllByscno(int scno) throws SQLException {
+		return client.queryForList("reserve.selectAllByscno", scno);
+	}
 
 }

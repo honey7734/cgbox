@@ -2,6 +2,7 @@ package theater.dao;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
@@ -35,6 +36,10 @@ public class TheaterDaoImpl implements ITheaterDao {
 	@Override
 	public int selectTheaterNoByScreenNo(int sno) throws SQLException {
 		return (int) client.queryForObject("theater.selectTheaterNoByScreenNo", sno);
+	}
+	@Override
+	public int selectTheaterPriceByMnoAndTname(Map<String, String> map) throws SQLException {
+		return (int) client.queryForObject("theater.selectTheaterPriceByMnoAndTname", map);
 	}
 
 }

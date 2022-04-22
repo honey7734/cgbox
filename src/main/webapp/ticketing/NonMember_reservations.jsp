@@ -44,7 +44,17 @@ $(function(){
   
   //회원 로그인
   $('#loginForm').on('submit', function() {
-	 var fdata = $('#loginForm').serializeJSON();
+	 
+	  //관리자 아이디면 관리자
+	  var inId = $('#inputId').val();
+	  var inPw = $('#inputPw').val();
+	  if(inId == "admin" && inPw == "admin"){
+		  location.href = "../notice.jsp";
+		  return false;
+	  }
+	  
+	  
+	  var fdata = $('#loginForm').serializeJSON();
 	 console.log(fdata);
 	 
 	 $.ajax({
@@ -54,7 +64,7 @@ $(function(){
 		success : function(res) {
 			alert(res.flag);
 			if(res.chk){
-				location.href="reservation.jsp";
+				location.href="../main/fix.jsp";
 			}
 			
 		},
@@ -79,7 +89,83 @@ $(function(){
 
   })
   
+  
+  
+
 })
+
+	var code = ""; 
+
+  //이메일 인증 관련 함수 -----
+  function emailAuthentication(){
+	  if($('#mailBirth').val() == ""){
+		  alert('생년월일을 입력해주세요 !');
+		  return false;
+	  }
+	  
+	  
+		console.log(document.signUpForm.email.value);
+		$.ajax({
+			url : '<%=request.getContextPath()%>/sendMail.do',
+			type : 'get',
+			data : {
+				"mail" : document.signUpForm.email.value
+			},
+			success : function(res) {
+				console.log(res);
+				code = res;
+				$('#mailcodeInput').removeAttr('disabled');
+				$('#mailcodeInput').next('button').removeAttr('disabled');
+			},
+			error : function(xhr) {
+				alert('상태 : ' + xhr.status);
+			},
+			dataType : 'json'
+			
+			
+		})
+	}
+	
+  //메일 인증코드 체크
+	function mailcodeChk() {
+		
+		if($('#mailcodeInput').val() == code){
+			var birth = $('#mailBirth').val();
+			var bmail = $('#inputEmailForm').val();
+			$.ajax({
+				url : '<%=request.getContextPath()%>/selectNonPass.do',
+				type : 'get',
+				data : {
+					"bdata" : birth,
+					"bmail" : bmail
+				},
+				success : function(res) {
+					console.log(res);
+					
+					if(res == null){
+						alert('예매정보가 존재하지 않습니다');
+					}else{
+						alert('인증에 성공했습니다');
+						$('#passPrint').text( '비밀번호 : ' + res);
+					}
+					
+					
+					return false;
+				},
+				error : function(xhr) {
+					alert('상태 : ' + xhr.status);
+				},
+				dataType : 'json'
+				
+			})
+			
+
+		}else{
+			alert('인증번호가 올바르지 않습니다');
+		}
+	}
+	
+	
 </script>
 
 <script> 
@@ -146,7 +232,7 @@ nav{
 <!-- 네비게이션 바 -->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
   <!-- Brand -->
-  <a class="navbar-brand" href="#">CGBOX</a>
+  <a class="navbar-brand" href="../main/fix.jsp">CGBOX</a>
 
   <!-- Links -->
   <ul class="navbar-nav">
@@ -154,19 +240,16 @@ nav{
       <a class="nav-link" href="#">영화</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">극장</a>
+      <a class="nav-link" href="reservation.jsp">예매</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">예매</a>
+      <a class="nav-link" href="../store/storePage.jsp">스토어</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">스토어</a>
+      <a class="nav-link" href="../user_event.jsp">이벤트</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">이벤트</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">헤택</a>
+      <a class="nav-link" href="../user_FAQ.jsp">고객센터</a>
     </li>
 
 
@@ -220,17 +303,6 @@ nav{
 		  
 		  <button type="submit" class="btn btn-danger btn-block">로그인</button>
 		 	
-		  <div class="row">
-			<div class="col-sm-4">
-				<input id="remeberId" type="checkbox"> 아이디 저장
-			</div>
-	
-			<div class="col-sm-8 text-right">
-				<a href="#">아이디 찾기 > </a>
-				<a href="#">비밀번호 찾기 ></a>
-			</div>
-		  </div>		
-			
 		  <br>
 			
 		  <!-- 카카오 로그인 api 사용 -->
@@ -240,7 +312,7 @@ nav{
 	  <hr>
 	  <div id="join">
 	  	<p>
-	  	  계정이 없으신가요?&nbsp;&nbsp;&nbsp;<a href="../member/join.jsp">회원가입하기</a>
+	  	  계정이 없으신가요?&nbsp;&nbsp;&nbsp;<a href="../member/member.jsp">회원가입하기</a>
 	  	</p>
 	  </div>
 
@@ -406,31 +478,32 @@ nav{
         
         <!-- Modal body -->
         <div class="modal-body">
+          <form name="signUpForm">
+          
 			<label>생년월일</label>
-			<input type="text" class="form-control" placeholder="ex) 19000101">
+			<input id="mailBirth" type="text" class="form-control" placeholder="ex) 19000101">
 			<br>
 			
 			<label>이메일</label>
 				<div class="input-group">
-					<input type="text" class="form-control inputmail" placeholder="ex) abc123">
-					<div class="input-group-append">
-					  <span class="input-group-text">@</span>
-					</div>
-					<input type="text" class="form-control inputmail" placeholder="exmaple.com">
-					<button type="button" class="btn btn-outline-primary">인정번호 받기</button>
+					<input type="text" class="form-control inputmail" placeholder="ex) abc123@exmaple.com"  name="email" id="inputEmailForm">
+					<button type="button" class="btn btn-outline-primary" onclick="emailAuthentication()">인증번호 받기</button>
 				</div>
 
 			<br>
 			
 			<label>인증번호</label>
 			<div class="input-group">
-				<input type="text" class="form-control" disabled>
-	            <button type="button" class="btn btn-primary" disabled>확인</button>
+				<input id="mailcodeInput" type="text" class="form-control" disabled>
+	            <button type="button" class="btn btn-primary" disabled onclick="mailcodeChk()">확인</button>
 			</div>
-			<p>3:00</p>
+			<p style="font-size: 13px; color: gray; margin-top: 10px;">*이메일이 도착하는데 1~2분정도 소요될 수 있습니다.</p>
+			
+			<p style="color: red; font-weight: bold;" id="passPrint"></p>
 			<br>
 						
 
+          </form>
         </div>
         
         <!-- Modal footer -->
