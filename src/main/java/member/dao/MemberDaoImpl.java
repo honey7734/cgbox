@@ -28,5 +28,10 @@ public class MemberDaoImpl implements IMemberDao {
 		return (MemberVO)client.queryForObject("member.loginMember", map);
 	}
 
+	@Override
+	public MemberVO selectKakao(String mail) throws SQLException {
+		return (MemberVO) client.queryForObject("member.selectKakao", mail);
+	}
+
 
 }

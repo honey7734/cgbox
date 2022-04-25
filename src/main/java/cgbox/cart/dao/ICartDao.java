@@ -35,4 +35,9 @@ public interface ICartDao {
 
     public int sumreturn(int customerno)throws SQLException;
     
+    public int paySuccessRemove(HashMap<String,Integer> map)throws SQLException;
+    
+    public int insertpaylist(HashMap<String,Integer> map) throws SQLException;
+    
+    
 }

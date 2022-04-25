@@ -16,7 +16,8 @@
 
 
 <script>
-customer_no = 0;
+	customer_no =0;
+	
 <% 
 
 MemberVO vo = (MemberVO)session.getAttribute("loginmember");
@@ -33,6 +34,7 @@ customer_no = <%=vo.getCustomer_no() %>;
 	// 세션 
 	
 	$(function(){
+		
 		// 스토어 전체항목 소개문구
 		storestr = "<h3>CGVBOX STORE</h3>";
 		if(customer_no != 0){
@@ -77,6 +79,8 @@ customer_no = <%=vo.getCustomer_no() %>;
 				}
 			}else{
 				alert("장바구니로 이동합니다.");
+				// 장바구니 경로
+				window.location.href="<%=request.getContextPath()%>/CartServlet.do";
 			}
 			
 
@@ -103,8 +107,9 @@ customer_no = <%=vo.getCustomer_no() %>;
 			}else{
 				prod_no = $(this).next().next().text();
 				insertCartprod2();
+				// 장바구니 경로
+				window.location.href="<%=request.getContextPath()%>/CartServlet.do";
 			}
-			/* window.location.href=""; */
 		})
 	})
 	
@@ -253,12 +258,12 @@ customer_no = <%=vo.getCustomer_no() %>;
 <body>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top" >
   <!-- Brand -->
-  <a class="navbar-brand" href="../main/fix.jsp">CGBOX</a>
+  <a class="navbar-brand" href="../main/mainPage.jsp">CGBOX</a>
 
   <!-- Links -->
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" href="#">영화</a>
+      <a class="nav-link" href="../movie/movieChart.jsp">영화</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">극장</a>

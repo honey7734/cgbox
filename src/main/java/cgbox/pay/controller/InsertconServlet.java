@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import cgbox.pay.service.IPayService;
 import cgbox.pay.service.PayServiceImpl;
+import cgbox.vo.MemberVO;
 
 /**
  * Servlet implementation class Insertcon
@@ -41,7 +42,7 @@ public class InsertconServlet extends HttpServlet {
 		for(Integer no : list) {
 		    System.out.println(no); //성공했음 
 			if(prodno == no) {
-				flag = true;
+				flag = true;  //있는 상품
 			}
 		}
 		
@@ -51,9 +52,9 @@ public class InsertconServlet extends HttpServlet {
 		} else {
 
 			HttpSession session = request.getSession();
-			session.setAttribute("customer_no", 3);
-			// 세션을 통해서 id를 얻는다
-			int customer_no = (int) session.getAttribute("customer_no");
+			MemberVO loginmember = (MemberVO)session.getAttribute("loginmember");
+			int customer_no = loginmember.getCustomer_no();
+  
 
 			// 해당 상품을 고객이 원래 가지고 있는 상품인지 확인한다
 			HashMap<String, Integer> map = new HashMap<String, Integer>();
@@ -77,7 +78,7 @@ public class InsertconServlet extends HttpServlet {
 					System.out.println("수량 +1실패 ");
 				}
 
-			} else if (chkpro == null) { // chkpro가 null이다 == 가지고 있지 않은 상품이다 =insert
+			} else if (chkpro == null ) { // chkpro가 null이다 == 가지고 있지 않은 상품이다 =insert
 
 				int count = service.insertmcon(map);
 				if (count > 0) {

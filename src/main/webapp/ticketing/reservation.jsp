@@ -570,18 +570,18 @@ $(function() {
 <!-- 네비게이션 바 -->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
   <!-- Brand -->
-  <a class="navbar-brand" href="../main/fix.jsp">CGBOX</a>
+  <a class="navbar-brand" href="../main/mainPage.jsp">CGBOX</a>
 
   <!-- Links -->
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" href="#">영화</a>
+      <a class="nav-link" href="movie/movieChart.jsp">영화</a>
     </li>
 <!--     <li class="nav-item"> -->
 <!--       <a class="nav-link" href="#">극장</a> -->
 <!--     </li> -->
     <li class="nav-item">
-      <a class="nav-link" href="#" style="font-weight : bold; color: white">예매</a>
+      <a class="nav-link" href="reservation.jsp" style="font-weight : bold; color: white">예매</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="../store/storePage.jsp">스토어</a>

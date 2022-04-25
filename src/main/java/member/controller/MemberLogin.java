@@ -34,6 +34,8 @@ public class MemberLogin extends HttpServlet {
 		//로그인 된 멤버 정보
 		MemberVO loginMember = service.loginMember(map);
 		
+		System.out.println("loginMember : " + loginMember.toString());
+		
 		//로그인 처리 확인용 샘플
 		request.setAttribute("login", loginMember);
 		request.getRequestDispatcher("ticketing/test.jsp").forward(request, response);

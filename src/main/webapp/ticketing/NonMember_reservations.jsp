@@ -13,6 +13,13 @@
   <script src="../js/jquery.serializejson.min.js"></script>
 
 <%
+	//로그인이 되어 있으면 이 페이지로 못옴. 세션이 있으면 메인으로 보냄
+	if(session.getAttribute("loginmember")!=null){
+%>
+		<script type='text/javascript'>alert('이미 로그인이 되었습니다.');location.href = "../main/mainPage.jsp";</script>
+<%	
+	}
+
 	String msg = request.getParameter("msg");
 	if(msg==null) msg = "";
 	String exist = request.getParameter("exist");
@@ -30,12 +37,13 @@ if("<%=exist%>" != ""){
 
 
 $(function(){
-<%
+
 	// 로그인 되지않은 회원만 접근하는 파일이므로
 	// 로그인 세션이 있는 경우 에러가 날 수 있으니 세션을 삭제해준다.
-	session.removeAttribute("loginmember");
+	
+// 	session.removeAttribute("loginmember");
 					
-%>
+
 	
   //네비게이션 탭 페이지 전환 메소드
   $(".nav-tabs a").click(function(){
@@ -64,7 +72,7 @@ $(function(){
 		success : function(res) {
 			alert(res.flag);
 			if(res.chk){
-				location.href="../main/fix.jsp";
+				location.href="../main/mainPage.jsp";
 			}
 			
 		},
@@ -186,10 +194,59 @@ $(function(){
   }, false);
 })();
 </script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script type="text/javascript">
+	//	카카오 로그인
+	// afb060f5bfe58f467e8f0fddb9673a4a
+	window.Kakao.init("afb060f5bfe58f467e8f0fddb9673a4a");
+	// 	console.log(kaka.isInitialized()); // 실패시 삭제코드
+	function kakaoLogin(){
+		window.Kakao.Auth.login({
+			scope:'profile_nickname, profile_image, account_email, gender',
+			success : function(authObj){
+				console.log(authObj);
+				window.Kakao.API.request({
+					url: '/v2/user/me',  
+					success: res => {
+							const kakao_account = res.kakao_account;
+							console.log(kakao_account);
+							console.log(kakao_account.email);
+							var email = kakao_account.email;
+							var name = kakao_account.profile.nickname
+							console.log(name);
+							 $.ajax({
+								url : '<%=request.getContextPath()%>/selectKakao.do',
+								type : 'get',
+								data : {
+									"kmail" : email,
+									"kname" : name
+								},
+								success : function(res) {
+									location.href= '../main/mainPage.jsp';
+								},
+								error : function(xhr) {
+									alert('상태 : ' + xhr.status);
+								},
+								dataType : 'json'
+							}) 
+							
+							
+					}
+				});
+			}
+		});
+	}
+	
+
+	
+	
+</script>
+
 
 
 
 <style type="text/css">
+
 #contents{
 	border : 0px solid lightgray;
 	margin-top: 200px;
@@ -232,12 +289,12 @@ nav{
 <!-- 네비게이션 바 -->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
   <!-- Brand -->
-  <a class="navbar-brand" href="../main/fix.jsp">CGBOX</a>
+  <a class="navbar-brand" href="../main/mainPage.jsp">CGBOX</a>
 
   <!-- Links -->
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" href="#">영화</a>
+      <a class="nav-link" href="../movie/movieChart.jsp">영화</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="reservation.jsp">예매</a>
@@ -306,7 +363,7 @@ nav{
 		  <br>
 			
 		  <!-- 카카오 로그인 api 사용 -->
-		  <button id="kakaobtn" type="button" class="btn btn-warning btn-block">카카오 로그인</button>
+		  <button id="kakaobtn" type="button" class="btn btn-warning btn-block" onclick="kakaoLogin()">카카오 로그인</button>
 
 	  </form>
 	  <hr>

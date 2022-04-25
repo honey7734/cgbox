@@ -26,6 +26,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
   <style>
+  /* 2022-04-23 스타일 추가 내역*/
+  a:hover{
+  	text-decoration: none;
+  	color: white;
+  }
+  a{
+  	color: white;
+  	font-size: 1.5em;
+  }
+  /* 2022-04-23 스타일 추가 내역*/
+  
   /* Make the image fully responsive */
    .carousel-inner img {
     max-width: 100%;
@@ -221,6 +232,7 @@ button{
 }
 .btn{
 	border: 0px;
+	
 }
 
 .back{
@@ -234,7 +246,7 @@ button{
 
 <script type="text/javascript">
 $(function(){
-
+	// 영화진흥원 api를 실행한다.
 	$.ajax({
 		type: 'get',
 		url :"http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=20220419", 
@@ -256,7 +268,7 @@ $(function(){
 				 arr3.push(v.openDt);
 				
 			}) 
-			
+			// 값을 가져오면 db에 정보를 넣는다.
 			movieInsert();
 			
 		}
@@ -275,6 +287,7 @@ $(function(){
 				"movieOpen" : arr3
 			},
 			success : function(res){
+				// db에 자료를 넣는 것을 성공하면 메인페이지 하단에 데이터를 삽입한다.
 				imgInsert();
 			},
 			error : function(xhr){
@@ -285,7 +298,6 @@ $(function(){
  	}
 	
 	// ---
-	// (cgv로고 클릭시 img실행)
 		var imgInsert = function(){
 		$.ajax({
 			type:'post',
@@ -304,6 +316,12 @@ $(function(){
 				var fImg6 = $('.swiper-wrapper').find('.m5');
 				var Aid = $('.swiper-wrapper').find('.a');
 				
+				img = [];
+				Mname = [];
+				open = [];
+				summary = [];
+				running = [];
+				link = [];
 				$.each(res, function(i, v) {
 					
 					if(fImg1.eq(i).attr('src')==""){
@@ -315,12 +333,18 @@ $(function(){
 						fImg5.eq(i).val(v.movie_running);
 						fImg6.eq(i).val(v.movie_link);
 						
+						
 					}
-					
-				})	
-
-				AtagId = $('.a').attr('id');
-				console.log(AtagId);
+				})
+				for(i = 0; i < 10; i++){
+					img.push(fImg1.eq(i).attr('src'));
+					open.push(fImg3.eq(i).val());
+ 					Mname.push(fImg2.eq(i).val());
+					summary.push(fImg4.eq(i).val());
+					running.push(fImg5.eq(i).val());
+					link.push(fImg6.eq(i).val());
+				}
+// 				alert(img[1]);
 
 			},
 			error : function(xhr){
@@ -331,8 +355,44 @@ $(function(){
 			
 		})
 	}
-
 	
+		// 영화 태그
+		$('#MovieChart').on('click', function(){
+			alert(img[1]);
+			MovieChart();
+		})
+		
+		var MovieChart = function(){
+			alert(img[1]);
+			$.ajax({
+				url : "<%=request.getContextPath()%>/MovieChart.do",
+				type : 'post',
+				traditional : true,
+				data : {
+	 				"movieName" : Mname,
+					"movieOpen" : open,
+					"movieSummary" : summary,
+					"movieLink" : link,
+					"movieImg" : img,
+					"movieRunning" : running
+				},
+				success : function(res){
+					
+				},
+				error : function(xhr){
+					alert("상태 : " + xhr.status);
+				}
+			})
+			
+		}
+	
+	
+	
+	
+	
+	
+	
+	// 상세페이지를 누르면 값을 받아서 상세페이지에 값들을 넘긴다.
 	$('.btn-plus1').on('click', function(){
 		movieName = $(this).parents('.swiper-slide').find('.m1').val();
 		movieOpen = $(this).parents('.swiper-slide').find('.m2').val();
@@ -341,6 +401,7 @@ $(function(){
 		movieLink = $(this).parents('.swiper-slide').find('.m5').val();	
 		movieImg = $(this).parents('.swiper-slide').find('.img').attr('src');
 		detailMovie();
+		
 	})
 	
 	var detailMovie = function(){
@@ -366,6 +427,8 @@ $(function(){
 		})
 	}
 	
+	
+	
 })
 </script>
 
@@ -384,13 +447,29 @@ $(function(){
 	<div>
 		<ul>
 			<li class="memberli">
-				<a href="../ticketing/NonMember_reservations.jsp">로그인</a>
+				<!-- 2022-04-23추가내역 -->
+				<!-- 2022-04-23추가내역 -->
+				<!-- 2022-04-23추가내역 -->
+				<a href="../ticketing/NonMember_reservations.jsp"><img src="https://img.icons8.com/ios/50/ffffff/lock--v1.png"/>
+					<br><div class="TopDiv" style="text-align: center;"><span>로그인</span></div>
+				</a>
+				<!-- 2022-04-23추가내역 -->				
+				<!-- 2022-04-23추가내역 -->				
+				<!-- 2022-04-23추가내역 -->								
 			</li>
 			<li class="memberli">
-				<a href="">메인페이지</a>
+				<!-- 2022-04-23추가내역 -->
+				<!-- 2022-04-23추가내역 -->
+				<a href="../myPage/myPage.jsp"><img src="https://img.icons8.com/pastel-glyph/50/ffffff/person-male--v1.png"/>
+					<br><div class="TopDiv" style="text-align:center;"><span>마이페이지</span></div>
+				</a>
+				<!-- 2022-04-23추가내역 -->
+				<!-- 2022-04-23추가내역 -->
 			</li >
 			<li class="memberli">
-				<a href="../member/member.jsp">회원가입</a>
+				<a href="../member/member.jsp"><img src="https://img.icons8.com/small/50/ffffff/add-user-group-woman-woman.png"/>
+					<br><div class="TopDiv" style="text-align:center;"><span>회원가입</span></div>
+				</a>
 			</li>
 		</ul>
 	</div>
@@ -399,7 +478,7 @@ $(function(){
 		
 		<ul class="navul">
 			<li class="navli">
-				<a href="" class="btn3">영화</a>
+				<a href="../movie/movieChart.jsp" class="btn3" id="MovieChart">영화</a>
 			</li>
 			<li class="navli">
 				<a href="../ticketing/reservation.jsp" class="btn3">예매</a>

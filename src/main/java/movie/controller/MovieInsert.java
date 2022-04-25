@@ -56,7 +56,7 @@ public class MovieInsert extends HttpServlet {
 		List<String> name = service.selectMovieName();
 		
 		
-		System.out.println("asdfasdf : " + name);
+//		System.out.println("asdfasdf : " + name);
 		int no = 0;
 		for(int j = 0; j < movieNm.length; j++) {
 			

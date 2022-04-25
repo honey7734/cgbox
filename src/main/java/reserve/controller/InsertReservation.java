@@ -38,7 +38,11 @@ public class InsertReservation extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		
+		System.out.println("InsertReservation에 왔다");
+		
+		//1) seats
 		String[] seatsarray = request.getParameterValues("seats");
+		//2) screenNo
 		int screenNo = Integer.parseInt(request.getParameter("screenNo"));
 		int cstomerNo = -1;
 
@@ -49,8 +53,10 @@ public class InsertReservation extends HttpServlet {
 		//상영관 번호는 screenNo를 통해 얻어온다
 		int theaterNo = getTheaterNoByscreenNo(screenNo);
 		
-		
+		//3) customerNo
 		String memcusNo = request.getParameter("customerNo");
+				
+		
 		if(memcusNo == null || memcusNo.length() == 0) {
 			
 			if(session.getAttribute("nonMember") == null) {

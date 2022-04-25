@@ -16,6 +16,7 @@ import cgbox.cart.service.CartServiceImpl;
 import cgbox.cart.service.ICartService;
 import cgbox.pay.service.IPayService;
 import cgbox.pay.service.PayServiceImpl;
+import cgbox.vo.MemberVO;
 import cgbox.vo.MovieInfoVO;
 import cgbox.vo.ReserveVO;
 import cgbox.vo.ScreenVO;
@@ -38,10 +39,11 @@ public class MemberPay extends HttpServlet {
 			throws ServletException, IOException {
 
 		request.setCharacterEncoding("utf-8");
+		
 		HttpSession session = request.getSession();
-		session.setAttribute("customer_no", 3);
-		int customer_no = (int) session.getAttribute("customer_no");
-
+		MemberVO loginmember = (MemberVO)session.getAttribute("loginmember");
+		int customer_no = loginmember.getCustomer_no();
+   
 		IPayService service = PayServiceImpl.getInstance();
 
 		// 보유한 영화관람권 불러오기
@@ -51,14 +53,19 @@ public class MemberPay extends HttpServlet {
 		// 보유한 예약 정보 불러오기 //customer_no를 넘겨줘서 list 형식으로 받는다
 	   List<MovieInfoVO> minfolist = service.minfo(customer_no);
        
+	   //sum값 결제하실 금액 
+	   int sum =0; 
+	   for(int i=0; i<minfolist.size(); i++ ) {
+		   sum += minfolist.get(i).getTheater_price();
+	   }
 	   
-	    
+	    request.setAttribute("sum", sum);
 	    request.setAttribute("mconlist", mconlist);
 		request.setAttribute("minfolist", minfolist );
-		request.getRequestDispatcher("pay/MemberPayPage.jsp").forward(request, response);
-	   
-
 		
+		request.setAttribute("loginmember", loginmember);
+		
+		request.getRequestDispatcher("pay/MemberPayPage.jsp").forward(request, response);
 
 	}
 

@@ -57,8 +57,8 @@ img{
 	<div>
 	
 		<h1>
-			<a href="../main/fix.jsp">
-				<img src="https://img.cgv.co.kr/R2014/images/common/logo/logoRed.png">
+			<a href="../main/mainPage.jsp">
+				<img src="../images/logo_transparent.png" width="200px;" height="200px;">
 			</a>
 		</h1>
 	</div>

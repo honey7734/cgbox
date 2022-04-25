@@ -33,6 +33,9 @@ public class Discount extends HttpServlet {
 	int prodno = Integer.parseInt(request.getParameter("conprod"));
 	
 	IPayService service = PayServiceImpl.getInstance();
+
+	
+	
 	
      int prodprice = service.discountprice(prodno);
 	 

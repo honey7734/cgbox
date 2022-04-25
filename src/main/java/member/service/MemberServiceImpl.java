@@ -35,4 +35,17 @@ public class MemberServiceImpl implements IMemberService {
 		return memvo;
 	}
 
+	@Override
+	public MemberVO selectKakao(String mail) {
+		MemberVO vo = null;
+			
+		try {
+			vo = dao.selectKakao(mail);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return vo;
+	}
+
 }

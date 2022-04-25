@@ -1,6 +1,7 @@
 package cgbox.cart.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import cgbox.cart.service.CartServiceImpl;
 import cgbox.cart.service.ICartService;
+import cgbox.vo.MemberVO;
 import cgbox.vo.allcartVO;
 
 /**
@@ -33,17 +35,12 @@ public class CountUpdate extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-
+  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		session.setAttribute("customer_no",3);
-
-		
-		//세션을 통해서 id를 얻는다
-		 int customer_no = (int) session.getAttribute("customer_no");
- 
-		
-		
+        HttpSession session = request.getSession();
+		MemberVO loginmember = (MemberVO)session.getAttribute("loginmember");
+		int customer_no = loginmember.getCustomer_no();
+            
 		      request.setCharacterEncoding("utf-8");
 	         
 		      System.out.println("업데이트티운트 구하기 전 ");
@@ -68,7 +65,12 @@ public class CountUpdate extends HttpServlet {
 	          int count = service.updatecount(map);
 	          
 	          if(count>0) {System.out.println("수량변경에 성공하였습니다" + count); }
-	        	          
+	        	   
+	          response.setCharacterEncoding("utf-8");
+	          response.setContentType("text/html; charset=utf-8");
+	          PrintWriter out = response.getWriter();
+	          out.print("성공");
+	          
 	  		    List<allcartVO> prodlist =null;
 	  		   
 	  		    prodlist = service.allcart(customer_no);

@@ -1,6 +1,7 @@
 package cgbox.cart.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import cgbox.cart.service.CartServiceImpl;
 import cgbox.cart.service.ICartService;
+import cgbox.vo.MemberVO;
 import cgbox.vo.allcartVO;
 
 /**
@@ -49,9 +51,9 @@ public class SelectRemove extends HttpServlet {
 	   
 	     
 	   HttpSession session = request.getSession();
-		session.setAttribute("customer_no",3);
-		//세션을 통해서 id를 얻는다
-		int customer_no = (int) session.getAttribute("customer_no");
+		MemberVO loginmember = (MemberVO)session.getAttribute("loginmember");
+		int customer_no = loginmember.getCustomer_no();
+	 
 		ICartService service = CartServiceImpl.getInstance();
 		
 		HashMap<String,Integer> map = new HashMap<String,Integer>();
@@ -70,9 +72,13 @@ public class SelectRemove extends HttpServlet {
 				System.out.println("삭제하는데 실패하였습니다");
 			}
 		}
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.print("success");
+		
 		
 		List<allcartVO> prodlist =null;
-		   
 	    prodlist = service.allcart(customer_no);
 		request.setAttribute("prodlist", prodlist);  
 		request.getRequestDispatcher("cart/cartView.jsp").forward(request, response);	

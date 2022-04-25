@@ -29,7 +29,7 @@
 				code += '    </tbody>';
 				code += '  </table>';
 				code += '</div>';
-				code += '<div><input style="float: right; margin: 20px;" class="backB" type="button" value="목록" onclick="location.href=' + '&#39;FAQ.jsp&#39;' + '"></div>';
+				code += '<div><input style="float: right; margin: 20px;" class="backB" type="button" value="목록" onclick="location.href=' + '&#39;user_FAQ.jsp&#39;' + '"></div>';
 			})
 			
 			$('.FAQDetail').html(code);

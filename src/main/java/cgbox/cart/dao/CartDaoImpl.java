@@ -103,6 +103,22 @@ public class CartDaoImpl implements ICartDao {
 		
 		return (int) client.queryForObject("cart.sumreturn",customerno);
 	}
+	@Override
+	public int paySuccessRemove(HashMap<String, Integer> map) throws SQLException {
+		// TODO Auto-generated method stub
+		return client.delete("pay.paySuccessRemove",map);
+	}
+	@Override
+	public int insertpaylist(HashMap<String, Integer> map) throws SQLException {
+		// TODO Auto-generated method stub
+		int count =0;
+	Object obj = client.insert("pay.insertpaylist",map);
+	if(obj==null) {
+		count =1;
+	}
+
+		return count;
+	}
 	
 	
 

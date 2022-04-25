@@ -79,9 +79,29 @@ h1{
 </style>
 
 <script type="text/javascript">
+
+
+<%
+Map<String, String> result = (Map<String, String>) session.getAttribute("result");
+
+if(result == null){
+%>
+
+
+	alert('예약된 내역이 없습니다');
+
+<%	
+}else{
+	
+	
+%>
 $(function() {
 	$('#backbtn').on('click', function() {
 		location.href = 'NonMember_reservations.jsp';
+	})
+	
+	$('#paybtn').on('click', function() {
+		location.href = '<%=request.getContextPath()%>/NonMemberPay.do?tno=<%=result.get("ticket")%>';
 	})
 })
 </script>
@@ -92,28 +112,26 @@ $(function() {
 <!-- 네비게이션 바 -->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
   <!-- Brand -->
-  <a class="navbar-brand" href="#">CGBOX</a>
+  <a class="navbar-brand" href="../main/mainPage.jsp">CGBOX</a>
 
   <!-- Links -->
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" href="#">영화</a>
+      <a class="nav-link" href="../movie/movieChart.jsp">영화</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">극장</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">예매</a>
+      <a class="nav-link" href="reservation.jsp">예매</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">스토어</a>
+      <a class="nav-link" href="../store/storePage.jsp">스토어</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">이벤트</a>
+      <a class="nav-link" href="../user_event.jsp">이벤트</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">헤택</a>
-    </li>
+    
 
 
   </ul>
@@ -122,26 +140,7 @@ $(function() {
 <!-- ///////////////////////////////////////////////////////////// -->
 
 
-<%
-	Map<String, String> result = (Map<String, String>) session.getAttribute("result");
-	
-	if(result == null){
-	%>
-	
 
- 	
- 	<div class="container" style="margin-top: 300px; text-align: center;">
-		<img src="https://img.icons8.com/glyph-neue/300/dc3545/xbox-x.png" style="margin-bottom: 50px;"/>
-		
-		<h1>예매내역이 존재하지 않거나<br> 확인할 수 없습니다</h1>
-	</div>  
-
-
-<%	
-	}else{
-		
-		
-	%>
 	
 	
 
@@ -167,7 +166,7 @@ $(function() {
 		%>
 	   	  <div class="btn-group btn-block">
 	   	    <button type="button" class="btn btn-secondary" id="backbtn">뒤로가기</button>
-		    <button type="button" class="btn btn-success">결제 하기</button>
+		    <button id="paybtn" type="button" class="btn btn-success">결제 하기</button>
 		    <button type="button" class="btn btn-danger">예매 취소</button>
 		  </div>
 		<%      		

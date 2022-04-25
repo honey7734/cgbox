@@ -19,7 +19,11 @@
  		 where qna_no=#qna_no#
  	</update>
   	
-  
+  	<insert id="insertQnA" parameterClass="MQnAVO">
+  		insert into qna (qna_no, customer_no, qna_question, qna_date)
+  		values (qna_no_seq.nextval, #customer_no#, #qna_question#, sysdate)
+  		
+  	</insert>
   
   </sqlMap>
   

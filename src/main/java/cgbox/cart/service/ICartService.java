@@ -35,4 +35,7 @@ public interface ICartService {
 	 public int cartsum(int customerno);
 	 public int sumreturn (int customerno);
 
+	 public int paySuccessRemove(HashMap<String,Integer> map);
+	 
+	 public int insertpaylist(HashMap<String,Integer> map) ;
 }

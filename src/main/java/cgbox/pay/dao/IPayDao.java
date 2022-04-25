@@ -27,18 +27,22 @@ public interface IPayDao {
   
   public List<ReserveVO> selectreserve (int customerno) throws SQLException;
   
-  public String selectMname(int screenno) throws SQLException;
-  public TheaterVO  selectTinfo (int screenno) throws SQLException;
-  public String getTname(int mtheaterno) throws SQLException;
-  
-  public SeatVO rowcol (int seatno) throws SQLException;
-  
-  public ScreenVO startend (int screenno) throws SQLException;
-  
-  
-  
+
   //영화정보 한꺼번에 불러오기 
   public List<MovieInfoVO> minfo (int customerno) throws SQLException;
   
-  
+  public int updateTStatus (int ticketno) throws SQLException;
+
+public int minusCon (HashMap<String,Integer>map )throws SQLException;
+
+public String checkMemID (int customerno) throws SQLException;
+
+
+public int zerocon(HashMap<String,Integer>map )throws SQLException;
+public int zerodelete(HashMap<String,Integer>map) throws SQLException;
+
+public List<MovieInfoVO> minfoNonmember(int ticketno) throws SQLException;
+
+public int nonmemcusno(int ticketno) throws SQLException;
+
 }

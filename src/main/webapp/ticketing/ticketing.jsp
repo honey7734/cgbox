@@ -416,7 +416,7 @@ $(function() {
 		//1. DB에 예약정보 inset
 		//좌석 데이터
 		var seatarr = $('#seatnum').text().split(',');
-		console.log(seatarr);
+		console.log("seatarr : " + seatarr);
 	
 		//1) 티켓 데이터 insert -> 필요한 데이터? = 세션에 있는 고객번호
 		//2) 예약 데이터 insert -> 좌석데이터 / 상영일자 번호 / 티켓번호  
@@ -436,8 +436,25 @@ $(function() {
 			},
 			success : function(res) {
 				alert(res);
+				
 				//결제페이지로 이동
-				location.href = "NonMember_reservations.jsp";
+				
+				<%
+					//회원
+					if(session.getAttribute("loginmember") != null ){
+						
+					%>
+					location.href = "<%=request.getContextPath()%>/MemberPay.do";
+<%-- 						location.href = "<%=request.getContextPath()%>/NonMemberPay.do"; --%>
+					<%
+					
+				}else{
+					//비회원
+					%>
+					location.href = "<%=request.getContextPath()%>/NonMemberPay.do";
+					<%
+				}
+				%>
 			},
 			error : function(xhr) {
 				alert("상태 : " + xhr.status);

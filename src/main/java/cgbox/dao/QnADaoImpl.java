@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
+import cgbox.vo.MemberVO;
 import cgbox.vo.QnAVO;
 import kr.or.ddit.ibatis.config.SqlMapClientFactory;
 
@@ -28,5 +29,19 @@ public class QnADaoImpl implements IQnADao {
 	public int answerQnA(QnAVO vo) throws SQLException {
 		// TODO Auto-generated method stub
 		return (int)client.update("QnA.answerQnA", vo);
+	}
+	@Override
+	public List<MemberVO> memberInfo(int no) throws SQLException {
+		// TODO Auto-generated method stub
+		return client.queryForList("member.memberInfo", no);
+	}
+	@Override
+	public int insertQnA(QnAVO vo) throws SQLException {
+		int cnt = 0 ;
+		Object obj = client.insert("QnA.insertQnA", vo);
+		if(obj == null) {
+			cnt = 1;
+		}
+		return cnt;
 	}
 }

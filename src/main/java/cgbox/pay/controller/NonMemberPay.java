@@ -13,10 +13,13 @@ import javax.servlet.http.HttpSession;
 
 import cgbox.pay.service.IPayService;
 import cgbox.pay.service.PayServiceImpl;
+import cgbox.vo.MemberVO;
+import cgbox.vo.MovieInfoVO;
 import cgbox.vo.ReserveVO;
 import cgbox.vo.ScreenVO;
 import cgbox.vo.SeatVO;
 import cgbox.vo.TheaterVO;
+import vo.NonMemberVO;
 
 /**
  * Servlet implementation class NonMemberPay
@@ -40,66 +43,50 @@ public class NonMemberPay extends HttpServlet {
 		//비회원 결제화면 가지전에 거치는 servlet
 		
 		request.setCharacterEncoding("utf-8");
-		HttpSession session = request.getSession();
-		session.setAttribute("customer_no", 3);
-		int customer_no = (int) session.getAttribute("customer_no");
-
 		IPayService service = PayServiceImpl.getInstance();
 		
-		//보유한 예약 정보 불러오기
-		List<ReserveVO> reservelist = service.selectreserve(customer_no);
-		System.out.println("여기오나?");
-	   System.out.println(reservelist);
-        System.out.println("비회원예약정보 불러오기 "+reservelist.get(0).getScreen_no()+"입니다 ");
-			
-    	
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		// 영화제목
-		int screenno = reservelist.get(0).getScreen_no(); // 상영일정번호
-
-		String movieName = service.selectMname(screenno); // 영화이름
-		TheaterVO tinfo = service.selectTinfo(screenno); // 상영관정보
-	    ScreenVO  startend = service.startend(screenno);
+		HttpSession session = request.getSession();
 		
-		// System.out.println(tinfo);
-		
-		
-		
-		String theaterName = service.getTname(tinfo.getMtheater_no()); // 영화관이름얻기!
-		String[] arr = new String[reservelist.size()]; // list만한 사이즈의 좌석행열을 담을 배열 생성
         
-		int index = 0;
-		
-		for (ReserveVO reserve : reservelist) { // 좌석 담아주기
-			int seatno = reserve.getSeat_no();
-			SeatVO vo = service.rowcol(seatno);
-			String temp = "" + vo.getSeat_row() + vo.getSeat_col().toString(); //공유테이블에서 col의 타입은 number입니다!
-			arr[index] = temp;
-			index++;
-		}
+		//보유한 예약 정보 불러오기
+		// 보유한 예약 정보 불러오기 //customer_no를 넘겨줘서 list 형식으로 받는다
+		   List<MovieInfoVO> minfolist = null;
+	      
+		  
+		   int customer_no = 0;
+		   
+		   System.out.println("tno의 값은 : "+request.getParameter("tno"));
+		   //비회원이 결제 전에 예매만 해놓고 결제하지 않은 것 불러오기 
+		   if(request.getParameter("tno")!=null) {  //결제가 아직 되지 않은 것의 ticket_no
+			   	  System.out.println(request.getParameter("tno")+"입니다");
+			      minfolist = service.minfoNonmember(Integer.parseInt(request.getParameter("tno")));
+			      
+			     customer_no = service.nonmemcusno(Integer.parseInt(request.getParameter("tno")));
+			      
+		   }else {
+			   //원래 customer_no를 통해서 결제한 부분!
+			   NonMemberVO nvo = (NonMemberVO) session.getAttribute("nonMember");
+			   customer_no = nvo.getCustomer_no();
+			   minfolist = service.minfo(customer_no); 
+ 
+		   }
+		   
 
-		map.put("movieName", movieName);
+		   //sum값 결제하실 금액 
+		   int sum =0; 
+		   for(int i=0; i<minfolist.size(); i++ ) {
+			   sum += minfolist.get(i).getTheater_price();
+		   }
+		   System.out.println("비회원의 SUM 값은 : "+ sum);
+		   for(MovieInfoVO info : minfolist) {
+			   System.out.println("비회원의 info : "+ info);
+		   }
+		   
+		   request.setAttribute("minfolist", minfolist);
+           request.setAttribute("mname","CGBOX영화예매");
+		   request.setAttribute("sum", sum);
+		   request.setAttribute("cno", customer_no);
 		
-
-		
-		map.put("theatername", tinfo.getTheater_name());
-		map.put("theaterkind",tinfo.getTheater_kind());
-		map.put("theaterprice", tinfo.getTheater_price());
-		
-		map.put("theaterName", theaterName);
-		
-
-		
-		map.put("start",startend.getScreen_start());
-		
-		map.put("end",startend.getScreen_end());
-		
-		//결제할 금액
-		request.setAttribute("mname",map.get("movieName"));
-	    request.setAttribute("submitsum",tinfo.getTheater_price()*arr.length);	
-	   
-	    request.setAttribute("info", map);
-		request.setAttribute("arr", arr);
 		request.getRequestDispatcher("pay/INIStdPayRequest2.jsp").forward(request, response);
 	    
 	    

@@ -12,5 +12,6 @@ import cgbox.vo.MemberVO;
 public interface IMemberDao {
 
 	public MemberVO loginMember(Map<String, String> map) throws SQLException;
-
+	
+	public MemberVO selectKakao(String mail) throws SQLException;
 }

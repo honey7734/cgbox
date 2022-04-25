@@ -108,62 +108,9 @@ public class PayServiceImpl implements IPayService  {
 		}
 		return list;
 	}
-	@Override
-	public String selectMname(int screenno) {
-		String mname = null;
-		try {
-		mname=	dao.selectMname(screenno);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return mname;
-	}
-	@Override
-	public TheaterVO selectTinfo(int screenno) {
-		TheaterVO vo = null;
-		try {
-		vo=	dao.selectTinfo(screenno);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return vo;
-	}
-	@Override
-	public String getTname(int mtheaterno) {
-	    String mtheatername = null;
-	    try {
-		mtheatername =dao.getTname(mtheaterno);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return mtheatername;
-	}
-	@Override
-	public SeatVO rowcol(int seatno) {
-		// TODO Auto-generated method stub
-		SeatVO vo = null;
-		try {
-		vo=	dao.rowcol(seatno);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return vo;
-	}
-	@Override
-	public ScreenVO startend(int screenno) {
-		   ScreenVO vo = null;
-		   try {
-			vo =dao.startend(screenno);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return vo;
-	}
+
+
+	
 	@Override
 	public List<MovieInfoVO> minfo(int customerno) {
 		// TODO Auto-generated method stub
@@ -175,6 +122,85 @@ public class PayServiceImpl implements IPayService  {
 			e.printStackTrace();
 		}
 		return list ;
+	}
+	@Override
+	public int updateTStatus(int ticketno) {
+		int count =0;
+		try {
+		count=	dao.updateTStatus(ticketno);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return count;
+	}
+	@Override
+	public int minusCon(HashMap<String, Integer> map) {
+		int count =0;
+		try {
+		count=	dao.minusCon(map);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return count;
+	}
+	@Override
+	public String checkMemID(int customerno) {
+		// TODO Auto-generated method stub
+		String memid = null;
+		try {
+			memid =dao.checkMemID(customerno);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return memid;
+	}
+	@Override
+	public int zerocon(HashMap<String, Integer> map) {
+		int zero = 3;       
+		try {
+				 zero = dao.zerocon(map);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return zero;
+	}
+	@Override
+	public int zerodelete(HashMap<String, Integer> map) {
+		// TODO Auto-generated method stub
+		int count =0;
+		try {
+		count=	dao.zerodelete(map);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return count;
+	}
+	@Override
+	public List<MovieInfoVO> minfoNonmember(int ticketno) {
+		List<MovieInfoVO> list = null;
+		try {
+			list = dao.minfoNonmember(ticketno);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	@Override
+	public int nonmemcusno(int ticketno) {
+		     int cusno = 0;
+		     try {
+			cusno=	dao.nonmemcusno(ticketno);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return cusno;
 	}
 
 	

@@ -360,16 +360,16 @@ customer_no1 = <%=vo.getCustomer_no() %>;
     </li>
   </ul>
 </div>  
-<div class="rightMenu">
-  <ul class="nav justify-content-end cartclick" role="tablist">
-  	<li>
-  		 <strong class="nav-link cartMove">장바구니</strong>
-  	</li>
-  	<li>
-  		 <div class="cartCount">0</div>
-  	</li>
-  </ul>
-</div>
+<!-- <div class="rightMenu"> -->
+<!--   <ul class="nav justify-content-end cartclick" role="tablist"> -->
+<!--   	<li> -->
+<!--   		 <strong class="nav-link cartMove">장바구니</strong> -->
+<!--   	</li> -->
+<!--   	<li> -->
+<!--   		 <div class="cartCount">0</div> -->
+<!--   	</li> -->
+<!--   </ul> -->
+<!-- </div> -->
  
   <hr class="menuLine" style="border:1px solid red;">
   

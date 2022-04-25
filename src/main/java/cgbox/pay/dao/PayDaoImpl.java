@@ -71,31 +71,8 @@ public class PayDaoImpl implements IPayDao{
 		// TODO Auto-generated method stub
 		return client.queryForList("pay.selectreserve",customerno);
 	}
-	@Override
-	public String selectMname(int screenno) throws SQLException {
-		// TODO Auto-generated method stub
-		return (String) client.queryForObject("pay.selectMname",screenno);
-	}
-	@Override
-	public TheaterVO selectTinfo(int screenno) throws SQLException {
-		// TODO Auto-generated method stub
-		return (TheaterVO) client.queryForObject("pay.selectTinfo",screenno);
-	}
-	@Override
-	public String getTname(int mtheaterno) throws SQLException {
-		// TODO Auto-generated method stub
-		return (String) client.queryForObject("pay.getTname",mtheaterno);
-	}
-	@Override
-	public SeatVO rowcol(int seatno) throws SQLException {
-		// TODO Auto-generated method stub
-		return (SeatVO) client.queryForObject("pay.rowcol",seatno);
-	}
-	@Override
-	public ScreenVO startend(int screenno) throws SQLException {
-		// TODO Auto-generated method stub
-		return (ScreenVO) client.queryForObject("pay.startend",screenno);
-	}
+
+	
 	
 	
 	
@@ -104,6 +81,41 @@ public class PayDaoImpl implements IPayDao{
 	public List<MovieInfoVO> minfo(int customerno) throws SQLException {
 		// TODO Auto-generated method stub
 		return client.queryForList("pay.minfo",customerno);
+	}
+	@Override
+	public int updateTStatus(int ticketno) throws SQLException {
+		// TODO Auto-generated method stub
+		return client.update("pay.updateTStatus",ticketno);
+	}
+	@Override
+	public int minusCon(HashMap<String, Integer> map) throws SQLException {
+		// TODO Auto-generated method stub
+		return client.update("pay.minusCon",map);
+	}
+	@Override
+	public String checkMemID(int customerno) throws SQLException {
+		// TODO Auto-generated method stub
+		return (String) client.queryForObject("pay.checkMemID",customerno);
+	}
+	@Override
+	public int zerocon(HashMap<String, Integer> map) throws SQLException {
+		// TODO Auto-generated method stub
+		return (int) client.queryForObject("pay.zerocon", map);
+	}
+	@Override
+	public int zerodelete(HashMap<String, Integer> map) throws SQLException {
+		// TODO Auto-generated method stub
+		return client.delete("pay.zerodelete",map);
+	}
+	@Override
+	public List<MovieInfoVO> minfoNonmember(int ticketno) throws SQLException {
+		// TODO Auto-generated method stub
+		return client.queryForList("pay.minfoNonmember",ticketno);
+	}
+	@Override
+	public int nonmemcusno(int ticketno) throws SQLException {
+		// TODO Auto-generated method stub
+		return (int) client.queryForObject("pay.nonmemcusno",ticketno);
 	}
 
 	

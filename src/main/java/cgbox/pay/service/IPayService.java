@@ -28,14 +28,20 @@ public interface IPayService {
 	    public List<ReserveVO> selectreserve (int customerno);
 	    
 	    
-	    public String selectMname(int screenno);
-	    public TheaterVO  selectTinfo (int screenno);
-	    public String getTname(int mtheaterno);
-	    
-	    public SeatVO rowcol (int seatno);
-	    
-	    public ScreenVO startend (int screenno);
-	    
 	    
 	    public List<MovieInfoVO> minfo (int customerno) ;
+	    
+	    public int updateTStatus (int ticketno);
+	    
+	    
+	    public int minusCon (HashMap<String,Integer>map );
+
+	    public String checkMemID (int customerno);
+	    
+	    
+	    public int zerocon(HashMap<String,Integer>map );
+	    public int zerodelete(HashMap<String,Integer>map);
+	    public List<MovieInfoVO> minfoNonmember(int ticketno);
+	    public int nonmemcusno(int ticketno);
+
 }

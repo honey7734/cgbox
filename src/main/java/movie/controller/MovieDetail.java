@@ -45,8 +45,6 @@ public class MovieDetail extends HttpServlet {
 		String movieImg = request.getParameter("movieImg");
 		String movieRunning = request.getParameter("movieRunning");
 		
-		System.out.println("test1 : " + movieName);
-		
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		

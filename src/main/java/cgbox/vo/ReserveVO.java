@@ -7,6 +7,13 @@ public class ReserveVO {
 	private int ticket_no;
 	private String screen_day;
 	
+	
+	public String getScreen_day() {
+		return screen_day;
+	}
+	public void setScreen_day(String screen_day) {
+		this.screen_day = screen_day;
+	}
 	public int getSeat_no() {
 		return seat_no;
 	}
@@ -24,12 +31,6 @@ public class ReserveVO {
 	}
 	public void setTicket_no(int ticket_no) {
 		this.ticket_no = ticket_no;
-	}
-	public String getScreen_day() {
-		return screen_day;
-	}
-	public void setScreen_day(String screen_day) {
-		this.screen_day = screen_day;
 	}
 	
 	

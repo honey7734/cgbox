@@ -74,9 +74,6 @@
 		<selectKey keyProperty="member_id" resultClass="string">
 			select member_id from member where member_id = #member_id#
 		</selectKey>
-		
-		
-		
 	</insert>
 	
 	<select id="selectMaxNo" resultClass="int">
@@ -84,9 +81,17 @@
 	</select>
 	
 	<insert id="insertCustomerNo" parameterClass="int">
-		insert into customer values(#data#)
-		
+		insert into customer values(#data#)		
 	</insert>
   	
+  	<select id="memberInfo" parameterClass="int" resultClass="memberVO">
+  		select customer_no, member_name, member_mail, member_tel
+		  from member
+         where customer_no = #customer_no#
+  	</select>
+  	
+  	<select id="selectKakao" parameterClass="string" resultClass="memberVO">
+  		select * from member where member_id = #m# and member_mail=#m#
+  	</select>
   	
   </sqlMap>

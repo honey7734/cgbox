@@ -168,6 +168,28 @@ public class CartServiceImpl implements ICartService {
 		return sum;
 		
 	}
+	@Override
+	public int paySuccessRemove(HashMap<String, Integer> map) {
+		int count = 0;
+	       try {
+			count = dao.paySuccessRemove(map);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		return count;
+	}
+	@Override
+	public int insertpaylist(HashMap<String, Integer> map) {
+		int count = 0;
+	       try {
+			count = dao.insertpaylist(map);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		return count;
+	}
 
 	
 	

@@ -66,6 +66,13 @@ public class MemberVO {
 	public void setMember_point(int member_point) {
 		this.member_point = member_point;
 	}
+	@Override
+	public String toString() {
+		return "MemberVO [customer_no=" + customer_no + ", grade_no=" + grade_no + ", member_id=" + member_id
+				+ ", member_name=" + member_name + ", member_mail=" + member_mail + ", member_pass=" + member_pass
+				+ ", member_birth=" + member_birth + ", member_tel=" + member_tel + ", member_point=" + member_point
+				+ "]";
+	}
 	   
 	
 	

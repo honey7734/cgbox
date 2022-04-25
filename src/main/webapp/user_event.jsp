@@ -239,9 +239,12 @@ $(function(){
 
 						<!-- Search -->
 							<section id="search" class="alt">
-								<form method="post" action="#">
-									<input type="text" name="query" id="query" placeholder="Search" />
-								</form>
+<!-- 								<form method="post" action="#"> -->
+<!-- 									<input type="text" name="query" id="query" placeholder="Search" /> -->
+<!-- 									<a  href="main/mainPage.jsp">  -->
+									<img onclick="location.href='main/mainPage.jsp';" style="cursor: pointer" class="topimg" src="images/logo2.PNG" width="100" height="50">
+<!-- 									</a> -->
+<!-- 								</form> -->
 							</section>
 
 						<!-- Menu -->
@@ -253,7 +256,7 @@ $(function(){
 									<li>
 										<span class="opener">문의사항</span>
 										<ul>
-											<li><a href="myPage/myPage.jsp">Q&A</a></li>
+											<li><a href="user_QnA.jsp">Q&A</a></li>
 											<li><a href="user_FAQ.jsp">FAQ</a></li>
 											<li><a href="user_notice.jsp">공지사항</a></li>
 										</ul>

@@ -144,8 +144,20 @@ customer_no = <%=vo.getCustomer_no() %>;
 			if(inpass == $('.pass').val()){
 				$('#delModal').modal('hide');
 				deleteMember();
-				<% session.invalidate(); %>
-// 				window.location.href=
+				//로그아웃
+				$.ajax({
+		 			url : '<%=request.getContextPath()%>/Logout.do',
+		 			success : function() {
+				 		window.location.href='<%=request.getContextPath()%>/main/mainPage.jsp';
+					},
+					error : function(xhr) {
+						alert('상태 : ' + xhr.status);
+					}
+					
+		 		})
+						
+				
+				window.location.href='../main/mainPage.jsp';
 			}else{
 				alert('비밀번호를 정확하게 입력해주세요')
 			}
@@ -153,7 +165,7 @@ customer_no = <%=vo.getCustomer_no() %>;
 		})
 		
 		$('#movecart').on('click',function(){
-			window.location.href= "../store/storePage.jsp";
+			window.location.href= "<%=request.getContextPath()%>/CartServlet.do";
 		})
 		
 		$('.reserve').on('click',function(){
@@ -479,36 +491,36 @@ nav{
 <body>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top" >
   <!-- Brand -->
-  <a class="navbar-brand" href="#">CGBOX</a>
+  <a class="navbar-brand" href="../main/mainPage.jsp">CGBOX</a>
 
   <!-- Links -->
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" href="#">영화</a>
+      <a class="nav-link" href="../movie/movieChart.jsp">영화</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">극장</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">예매</a>
+      <a class="nav-link" href="../ticketing/reservation.jsp">예매</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">스토어</a>
+      <a class="nav-link" href="../store/storePage.jsp">스토어</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">이벤트</a>
+      <a class="nav-link" href="../event.jsp">이벤트</a>
     </li>
 
   </ul>
   <ul class="navbar-nav" style="margin-left:1300px;" >
     <li class="nav-item">
-      <a class="nav-link" href="#" style="float:right;">로그인</a>
+      <a class="nav-link" href="../ticketing/NonMember_reservations.jsp" style="float:right;">로그인</a>
       </li>
       <li class="nav-item">
-      <a class="nav-link" href="#" style="float:right;">MyPage</a>
+      <a class="nav-link" href="myPage.jsp" style="float:right;">MyPage</a>
       </li>
       <li class="nav-item">
-      <a class="nav-link" href="#" style="float:right;">고객센터</a>
+      <a class="nav-link" href="../user_FAQ.jsp" style="float:right;">고객센터</a>
       </li>
       </ul>
 </nav>

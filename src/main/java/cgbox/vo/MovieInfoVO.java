@@ -9,10 +9,17 @@ public class MovieInfoVO {
 	private String seat_row;
 	private String seat_col;
 	private int theater_name;
-	private String theater_kind;
+	
 	private int theater_price;
 	private String mtheater_name;
+	private String screen_day;
 	
+	public String getScreen_day() {
+		return screen_day;
+	}
+	public void setScreen_day(String screen_day) {
+		this.screen_day = screen_day;
+	}
 	public int getTicket_no() {
 		return ticket_no;
 	}
@@ -55,12 +62,8 @@ public class MovieInfoVO {
 	public void setTheater_name(int theater_name) {
 		this.theater_name = theater_name;
 	}
-	public String getTheater_kind() {
-		return theater_kind;
-	}
-	public void setTheater_kind(String theater_kind) {
-		this.theater_kind = theater_kind;
-	}
+	
+	
 	public int getTheater_price() {
 		return theater_price;
 	}
